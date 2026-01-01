@@ -91,7 +91,7 @@ header {
     box-sizing: border-box; 
     display: flex;
     align-items: center;
-    margin-bottom: 95px; 
+    margin-bottom: 30px; /* Reduced from 95px to 30px */
     transition: background 0.3s ease;
 }
 
@@ -720,6 +720,62 @@ mark.highlight {
     margin-top: auto;
 }
 
+/* Jump Trigger - Compact & Interactive */
+.jump-trigger {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 6px 14px;
+    border: 1px dashed var(--border-color); /* Visual cue for interactivity */
+    border-radius: 8px;
+    background: rgba(0,0,0,0.02);
+    transition: var(--transition);
+    user-select: none;
+    min-width: 90px;
+}
+
+[data-theme="dark"] .jump-trigger { background: rgba(255,255,255,0.02); }
+
+.jump-trigger:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    border-style: solid;
+    transform: translateY(-1px);
+}
+
+.jump-trigger:active { transform: translateY(0) scale(0.98); }
+
+.progress-text { 
+    font-size: 0.9rem; 
+    font-weight: 800; 
+    color: var(--text-main); 
+    line-height: 1;
+}
+
+.jump-label {
+    font-size: 0.65rem;
+    color: var(--primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.jump-trigger:hover .jump-label i {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0.6; }
+}
+
 .nav-btn {
     background: var(--primary);
     color: white;
@@ -739,8 +795,6 @@ mark.highlight {
 }
 .nav-btn:hover { background: var(--primary-dark); transform: translateY(-1px); color: white; }
 .nav-btn:disabled { background: var(--border-color); color: var(--text-sec); cursor: not-allowed; box-shadow: none; transform: none; }
-
-.progress-text { font-size: 0.8rem; font-weight: 700; color: var(--text-sec); }
 
 /* --- Site Footer --- */
 .site-footer {
