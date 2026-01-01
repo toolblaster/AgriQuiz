@@ -204,8 +204,8 @@ main {
 }
 
 .hero-title {
-    font-size: 2rem;
-    font-weight: 900; /* Max weight */
+    font-size: 38px; /* Updated to 38px */
+    font-weight: 900; 
     line-height: 1.1;
     margin: 0 0 20px 0;
     /* Darker gradient for text */
@@ -760,7 +760,7 @@ mark.highlight {
         text-align: left; 
     }
 
-    .hero-title { font-size: 2.8rem; }
+    .hero-title { font-size: 38px; } /* Updated from 2.8rem to 38px override */
     .hero-desc { margin-left: 0; max-width: 95%; }
     
     .subjects-title { text-align: left; }
