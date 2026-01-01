@@ -85,6 +85,12 @@
     <!-- CSS Linked -->
     <link rel="stylesheet" href="js/style.css">
 
+    <!-- Theme Initialization Script -->
+    <script>
+        // Apply theme immediately to prevent flash
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 </head>
 <body>
 
@@ -106,7 +112,23 @@
                 <span class="brand-sub">by toolblaster.com</span>
             </div>
         </a>
-        <button class="reset-btn" onclick="resetProgress()">Reset History</button>
+        <div class="header-actions">
+            <!-- Backup & Restore Controls -->
+            <button class="theme-btn" onclick="exportProgress()" aria-label="Backup Progress" title="Backup Progress (Download)">
+                <i class="fa-solid fa-download"></i>
+            </button>
+            <label for="importFile" class="theme-btn" aria-label="Restore Progress" title="Restore Progress (Upload)" style="cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0;">
+                <i class="fa-solid fa-upload"></i>
+            </label>
+            <input type="file" id="importFile" style="display: none;" accept=".json" onchange="importProgress(this)">
+
+            <!-- Theme Toggle -->
+            <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            
+            <button class="reset-btn" onclick="resetProgress()">Reset</button>
+        </div>
     </div>
 </header>
 
@@ -154,6 +176,8 @@
                     <div class="feature-item"><i class="fa-solid fa-mobile-screen"></i> Mobile Optimized</div>
                     <div class="feature-item"><i class="fa-solid fa-magnifying-glass"></i> Smart Search</div>
                     <div class="feature-item"><i class="fa-solid fa-user-shield"></i> No Sign-up</div>
+                    <div class="feature-item"><i class="fa-solid fa-download"></i> Backup & Restore</div>
+                    <div class="feature-item"><i class="fa-solid fa-location-crosshairs"></i> Jump Navigation</div>
                 </div>
             </div>
         </section>
@@ -197,7 +221,7 @@
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Accuracy</span>
-                        <span class="stat-value" id="statAccuracy" style="color:var(--accent)">0%</span>
+                        <span class="stat-value accent" id="statAccuracy">0%</span>
                     </div>
                 </div>
 
@@ -215,7 +239,15 @@
                     <button id="prevBtn" class="nav-btn" aria-label="Previous">
                         <i class="fa-solid fa-arrow-left"></i> Prev
                     </button>
-                    <span class="progress-text" id="progressText">0 / 0</span>
+                    
+                    <!-- Enhanced Jump Feature -->
+                    <div class="jump-trigger" id="jumpTrigger" title="Tap to Jump to specific question">
+                        <span class="progress-text" id="progressText">0 / 0</span>
+                        <span class="jump-label">
+                            <i class="fa-solid fa-location-crosshairs"></i> Jump To
+                        </span>
+                    </div>
+
                     <button id="nextBtn" class="nav-btn" aria-label="Next">
                         Next <i class="fa-solid fa-arrow-right"></i>
                     </button>
@@ -370,8 +402,14 @@
     const progressFill = document.getElementById('progressFill');
     const searchInput = document.getElementById('searchInput');
     const searchContainer = document.getElementById('searchContainer');
+    const themeBtn = document.getElementById('themeBtn');
+    const jumpTrigger = document.getElementById('jumpTrigger');
 
     window.onload = () => {
+        // Initialize Theme Icon
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        updateThemeIcon(currentTheme);
+
         // Wait 100ms for parts to load
         setTimeout(() => {
             if (window.quizData && window.quizData.length > 0) {
@@ -395,6 +433,68 @@
         }, 100);
     };
 
+    function toggleTheme() {
+        const html = document.documentElement;
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateThemeIcon(next);
+    }
+
+    function updateThemeIcon(theme) {
+        if(theme === 'dark') {
+            themeBtn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        } else {
+            themeBtn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        }
+    }
+
+    // Export Progress
+    window.exportProgress = function() {
+        const dataStr = JSON.stringify(historyState);
+        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        const exportFileDefaultName = 'agriquiz_backup.json';
+        const linkElement = document.createElement('a');
+        linkElement.setAttribute('href', dataUri);
+        linkElement.setAttribute('download', exportFileDefaultName);
+        linkElement.click();
+    }
+
+    // Import Progress
+    window.importProgress = function(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const contents = JSON.parse(e.target.result);
+                if (contents && contents.answers) {
+                    historyState = contents;
+                    saveToStorage();
+                    
+                    // Reset to last index in imported data
+                    if(historyState.lastIndex && historyState.lastIndex < currentList.length) {
+                        currentIndex = historyState.lastIndex;
+                    } else {
+                        currentIndex = 0;
+                    }
+                    
+                    loadQuestion(currentIndex);
+                    updateStats();
+                    alert('Progress restored successfully!');
+                } else {
+                    alert('Invalid backup file. Please ensure it is a valid AgriQuiz JSON file.');
+                }
+            } catch(err) {
+                alert('Error reading file. Please try again.');
+            }
+        };
+        reader.readAsText(file);
+        // Reset input so same file can be selected again if needed
+        input.value = '';
+    }
+
     function adjustFont(dir) {
         fontLevel += dir;
         // Limit range
@@ -405,18 +505,9 @@
 
     function getFontSize() {
         // Unified size logic for Question and Options
-        // Level -1 (Default/A-): 0.95rem
-        // Level 0: 1.10rem
-        // ...
-        // Level 3 (A+): ~1.55rem
-        
         const baseSize = 0.95; 
         const step = 0.15; 
-        
-        // Calculate offset from lowest level (-1)
-        // Level -1 -> offset 0
         const offset = fontLevel + 1; 
-        
         return `${baseSize + (offset * step)}rem`;
     }
 
@@ -469,7 +560,8 @@
 
         const q = currentList[index];
         const savedAnswer = historyState.answers[q.id];
-        const isAnswered = savedAnswer !== undefined;
+        // Ensure strictly that it is a number (index) to avoid 'null' or garbage causing locked state
+        const isAnswered = (savedAnswer !== undefined && savedAnswer !== null && typeof savedAnswer === 'number');
         
         // Get unified font size
         const fontSize = getFontSize();
@@ -497,10 +589,11 @@
             }
             
             // Applied inline style for font-size to ensure option buttons resize with the adjuster
+            // Added safe quotes around ID to prevent JS error on strings
             return `
             <div class="option-btn ${statusClass} ${isAnswered ? 'disabled' : ''}" 
                  style="font-size: ${fontSize};"
-                 onclick="handleAnswer(this, ${q.id}, ${i})">
+                 onclick="handleAnswer(this, '${q.id}', ${i})">
                 <span>${optText}</span>
                 ${iconHtml}
             </div>`;
@@ -546,6 +639,9 @@
     }
 
     window.handleAnswer = function(btn, qId, choiceIndex) {
+        // Safety Check
+        if (!currentList || !currentList[currentIndex]) return;
+        
         const q = currentList[currentIndex];
         historyState.answers[qId] = choiceIndex;
         saveToStorage();
@@ -564,6 +660,23 @@
         if (currentIndex > 0) {
             currentIndex--;
             loadQuestion(currentIndex);
+        }
+    });
+
+    // Jump Logic: Click on Progress Text/Icon
+    jumpTrigger.addEventListener('click', () => {
+        const max = currentList.length;
+        // Pre-fill prompt with current question number for convenience
+        const p = prompt(`Enter Question Number (1 - ${max}) to jump:`, currentIndex + 1);
+        
+        if (p) {
+            const num = parseInt(p);
+            if (!isNaN(num) && num >= 1 && num <= max) {
+                currentIndex = num - 1;
+                loadQuestion(currentIndex);
+            } else {
+                if(p.trim() !== "") alert(`Please enter a valid number between 1 and ${max}.`);
+            }
         }
     });
 
