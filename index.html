@@ -158,10 +158,11 @@
                 
                 <!-- Widget Header -->
                 <div class="widget-header">
-                    <!-- Compact Search -->
-                    <div class="search-container">
+                    <!-- Compact Search with Clear Button -->
+                    <div class="search-container" id="searchContainer">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search topics...">
+                        <i class="fa-solid fa-xmark search-clear" id="searchClear" onclick="clearSearch()" title="Clear Search"></i>
                     </div>
                     <!-- Text Size Adjuster -->
                     <div class="text-controls">
@@ -347,6 +348,7 @@
     let currentIndex = 0;
     let historyState = { lastIndex: 0, answers: {} };
     let fontLevel = 0; // 0 = default
+    let currentSearchTerm = '';
 
     // DOM Elements
     const cardArea = document.getElementById('cardArea');
@@ -356,6 +358,7 @@
     const progressText = document.getElementById('progressText');
     const progressFill = document.getElementById('progressFill');
     const searchInput = document.getElementById('searchInput');
+    const searchContainer = document.getElementById('searchContainer');
 
     window.onload = () => {
         // Wait 100ms for parts to load
@@ -386,12 +389,6 @@
         // Limit range
         if(fontLevel > 3) fontLevel = 3;
         if(fontLevel < -1) fontLevel = -1;
-        
-        const qEn = document.querySelector('.q-text-en');
-        const qHi = document.querySelector('.q-text-hi');
-        
-        // We re-render to apply class, or just modify inline for simplicity given dynamic content
-        // Better to re-render current question to apply styles cleanly
         loadQuestion(currentIndex);
     }
 
@@ -406,17 +403,13 @@
     }
 
     function updateStats() {
-        // Calculate based on GLOBAL quizData and saved answers
         const total = window.quizData.length;
         const completedIds = Object.keys(historyState.answers);
         const completedCount = completedIds.length;
         const leftCount = total - completedCount;
         
         let correctCount = 0;
-        
-        // Count correct answers safely
         completedIds.forEach(id => {
-            // Find the question object even if list is filtered
             const q = window.quizData.find(item => item.id == id);
             if (q && q.answer === historyState.answers[id]) {
                 correctCount++;
@@ -425,19 +418,31 @@
         
         const wrongCount = completedCount - correctCount;
 
-        // Update UI
         document.getElementById('statDone').innerText = completedCount;
         document.getElementById('statLeft').innerText = leftCount;
         document.getElementById('statCorrect').innerText = correctCount;
         document.getElementById('statWrong').innerText = wrongCount;
     }
 
+    // Highlighting Helper
+    function highlightText(text, term) {
+        if (!term || term.length < 2) return text;
+        // Escape special regex chars
+        const safeTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${safeTerm})`, 'gi');
+        return text.replace(regex, '<mark class="highlight">$1</mark>');
+    }
+
     function loadQuestion(index) {
-        // Reset scroll position
         quizContent.scrollTop = 0;
 
         if (currentList.length === 0) {
-            cardArea.innerHTML = `<div style="text-align:center; padding:30px; font-size:0.9rem;">No match found.</div>`;
+            cardArea.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-file-circle-question"></i>
+                    <p>No matches found for "<strong>${currentSearchTerm}</strong>"</p>
+                    <button onclick="clearSearch()">Clear Search</button>
+                </div>`;
             updateControls();
             return;
         }
@@ -447,19 +452,24 @@
         const isAnswered = savedAnswer !== undefined;
         const fontStyles = getFontStyles();
 
+        // Apply highlighting
+        const qEnText = highlightText(q.questionEn, currentSearchTerm);
+        const qHiText = highlightText(q.questionHi, currentSearchTerm);
+
         const optionsHtml = q.options.map((opt, i) => {
             let statusClass = '';
             let iconHtml = '';
             
+            // Apply highlighting to options
+            const optText = highlightText(opt, currentSearchTerm);
+            
             if (isAnswered) {
                 if (i === q.answer) { 
                     statusClass = 'correct'; 
-                    // Use FontAwesome icons for status
                     iconHtml = '<span class="status-icon"><i class="fa-solid fa-check"></i></span>'; 
                 } 
                 else if (i === savedAnswer) { 
                     statusClass = 'wrong'; 
-                    // Use FontAwesome icons for status
                     iconHtml = '<span class="status-icon"><i class="fa-solid fa-xmark"></i></span>'; 
                 }
             }
@@ -467,7 +477,7 @@
             return `
             <div class="option-btn ${statusClass} ${isAnswered ? 'disabled' : ''}" 
                  onclick="handleAnswer(this, ${q.id}, ${i})">
-                <span>${opt}</span>
+                <span>${optText}</span>
                 ${iconHtml}
             </div>`;
         }).join('');
@@ -481,10 +491,8 @@
             feedbackHtml = `<div class="feedback-msg" style="display:block; background:${bg}; color:${color}">${text}</div>`;
         }
 
-        // Add 'answered' class to list for CSS dimming
         const listClass = isAnswered ? 'options-list answered' : 'options-list';
         
-        // Update header logic to use FA icons
         const statusDisplay = isAnswered 
             ? (savedAnswer === q.answer 
                 ? '<i class="fa-solid fa-check"></i> Solved' 
@@ -496,14 +504,15 @@
                 <span>Q. ${q.id}</span>
                 <span style="color:var(--primary)">${statusDisplay}</span>
             </div>
-            <div class="q-text-en" style="font-size:${fontStyles.en}">${q.questionEn}</div>
-            <div class="q-text-hi" style="font-size:${fontStyles.hi}">${q.questionHi}</div>
+            <div class="q-text-en" style="font-size:${fontStyles.en}">${qEnText}</div>
+            <div class="q-text-hi" style="font-size:${fontStyles.hi}">${qHiText}</div>
             <div class="${listClass}" id="opts-${q.id}">
                 ${optionsHtml}
             </div>
             ${feedbackHtml}
         `;
 
+        // Only save position if NOT searching to prevent overwriting 'bookmark' with search index
         if (searchInput.value === '') { 
             historyState.lastIndex = currentIndex;
             saveToStorage();
@@ -516,9 +525,7 @@
         const q = currentList[currentIndex];
         historyState.answers[qId] = choiceIndex;
         saveToStorage();
-        updateStats(); // Refresh stats immediately
-
-        // Refresh view to show correct/incorrect states properly
+        updateStats(); 
         loadQuestion(currentIndex);
     };
 
@@ -537,7 +544,6 @@
     });
 
     document.addEventListener('keydown', (e) => {
-        // Only navigate if search input is not focused
         if (document.activeElement !== searchInput) {
             if (e.key === 'ArrowRight' && !nextBtn.disabled) nextBtn.click();
             if (e.key === 'ArrowLeft' && !prevBtn.disabled) prevBtn.click();
@@ -557,8 +563,6 @@
         const isAnswered = historyState.answers[currentQ.id] !== undefined;
 
         prevBtn.disabled = currentIndex === 0;
-        
-        // Lock Next button: Disable if last question OR if current question is not answered
         nextBtn.disabled = (currentIndex === currentList.length - 1) || !isAnswered;
 
         progressText.innerText = `${currentIndex + 1} / ${currentList.length}`;
@@ -566,39 +570,46 @@
         progressFill.style.width = `${pct}%`;
     }
 
+    // Enhanced Search Logic
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase().trim();
+        currentSearchTerm = term;
+        
+        // Toggle Clear Button
+        if (term.length > 0) {
+            searchContainer.classList.add('active');
+        } else {
+            searchContainer.classList.remove('active');
+        }
         
         if (term === '') {
-            // Reset to full list
             currentList = [...window.quizData];
-            // Restore the user's last saved position in the full list
             if (historyState.lastIndex !== undefined && historyState.lastIndex < currentList.length) {
                 currentIndex = historyState.lastIndex;
             } else {
                 currentIndex = 0;
             }
         } else {
-            // Filter logic
+            // Filter logic including options and IDs
             currentList = window.quizData.filter(q => {
-                // Safe access to properties
                 const qEn = q.questionEn ? q.questionEn.toLowerCase() : '';
-                const qHi = q.questionHi ? q.questionHi.toLowerCase() : ''; // toLowerCase on Hindi is safe/no-op usually
+                const qHi = q.questionHi ? q.questionHi.toLowerCase() : ''; 
                 const qId = q.id ? q.id.toString() : '';
-                
-                // Search in options as well for better discoverability
-                const inOptions = q.options && q.options.some(opt => opt.toLowerCase().includes(term));
+                const optionsStr = q.options ? q.options.join(' ').toLowerCase() : '';
 
-                return qEn.includes(term) || qHi.includes(term) || qId.includes(term) || inOptions;
+                return qEn.includes(term) || qHi.includes(term) || qId.includes(term) || optionsStr.includes(term);
             });
-            
-            // Always start at the beginning of search results
             currentIndex = 0;
         }
         
-        // Render
         loadQuestion(currentIndex);
     });
+
+    window.clearSearch = function() {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input')); // Trigger input event to reset
+        searchInput.focus();
+    };
 
     function saveToStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(historyState)); }
     function loadFromStorage() {
