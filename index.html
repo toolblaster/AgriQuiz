@@ -368,7 +368,12 @@
 
 <!-- Footer Section -->
 <footer class="site-footer">
-    &copy; 2026 AgriQuiz by <a href="https://toolblaster.com" style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">toolblaster.com</a>. All rights reserved.
+    <div class="footer-inner">
+        <span>&copy; 2026 AgriQuiz by <a href="https://toolblaster.com" style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">toolblaster.com</a>. All rights reserved.</span>
+        <button onclick="shareApp()" class="footer-share-btn" title="Share this page">
+            <i class="fa-solid fa-share-nodes"></i> <span class="share-text">Share</span>
+        </button>
+    </div>
 </footer>
 
 <!-- Data Loading -->
@@ -746,6 +751,35 @@
         searchInput.value = '';
         searchInput.dispatchEvent(new Event('input')); // Trigger input event to reset
         searchInput.focus();
+    };
+    
+    // Share Logic
+    window.shareApp = async function() {
+        const canonical = document.querySelector('link[rel="canonical"]')?.href || window.location.href;
+        const btn = document.querySelector('.footer-share-btn');
+        const originalHtml = btn.innerHTML;
+
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    // Only sharing URL as requested
+                    url: canonical
+                });
+            } catch (err) {
+                console.log('Share canceled');
+            }
+        } else {
+            // Fallback for desktop/unsupported browsers
+            try {
+                await navigator.clipboard.writeText(canonical);
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                }, 2000);
+            } catch (err) {
+                alert('Could not copy URL');
+            }
+        }
     };
 
     function saveToStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(historyState)); }
