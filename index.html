@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Optimized Meta Description for SEO -->
-    <meta name="description" content="AgriQuiz by toolblaster.com: Access 407+ agriculture exam questions covering Crops, Forestry, Minerals, Farming Types, and Land Conservation. Practice bilingual quizzes now.">
+    <meta name="description" content="Boost your Agriculture exam prep with AgriQuiz! Attempt 407+ bilingual (English & Hindi) questions. Challenge your brain on Crops, Forestry & more for ICAR & IBPS AFO 2026.">
     <!-- Optimized Title Tag -->
     <title>AgriQuiz by ToolBlaster | 407+ Agriculture Exam Questions</title>
     
@@ -15,14 +15,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://agriquiz.toolblaster.com/">
     <meta property="og:title" content="AgriQuiz by ToolBlaster | 407+ Agriculture Exam Questions">
-    <meta property="og:description" content="Master your Agriculture Exams covering Farming Types, Crops, Forestry, and Resources with 407+ bilingual questions.">
+    <meta property="og:description" content="Boost your Agriculture exam prep with AgriQuiz! Attempt 407+ bilingual (English & Hindi) questions. Challenge your brain on Crops, Forestry & more for ICAR & IBPS AFO 2026.">
     <meta property="og:image" content="https://toolblaster.com/agriquiz/cover-image.png"> <!-- Replace with your actual banner image URL -->
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://agriquiz.toolblaster.com/">
     <meta property="twitter:title" content="AgriQuiz by ToolBlaster | 407+ Agriculture Exam Questions">
-    <meta property="twitter:description" content="Master your Agriculture Exams covering Farming Types, Crops, Forestry, and Resources with 407+ bilingual questions.">
+    <meta property="twitter:description" content="Boost your Agriculture exam prep with AgriQuiz! Attempt 407+ bilingual (English & Hindi) questions. Challenge your brain on Crops, Forestry & more for ICAR & IBPS AFO 2026.">
     <meta property="twitter:image" content="https://toolblaster.com/agriquiz/cover-image.png"> <!-- Replace with your actual banner image URL -->
 
     <!-- JSON-LD Schema for SEO -->
@@ -121,7 +121,7 @@
             <h1 class="hero-title">Master Your<br>Agriculture Exam Preparation</h1>
             <p class="hero-desc">
                 Unlock access to <strong>407+ curated questions</strong> tailored for ICAR, IBPS AFO, and NABARD. 
-                Our interactive, bilingual quiz system is designed to boost your retention and speed for 2026 exams.
+                Our interactive, <strong>bilingual (English & Hindi)</strong> quiz system is designed to challenge your brain, boost retention, and ensure you are exam-ready for 2026.
             </p>
             
             <!-- Key Subjects Section (Compact) -->
@@ -144,11 +144,15 @@
                 </div>
             </div>
 
-            <div class="features-grid">
-                <div class="feature-item"><i class="fa-solid fa-book"></i> Bilingual Questions</div>
-                <div class="feature-item"><i class="fa-solid fa-floppy-disk"></i> Auto-Save Progress</div>
-                <div class="feature-item"><i class="fa-solid fa-bolt"></i> Instant Feedback</div>
-                <div class="feature-item"><i class="fa-solid fa-mobile-screen"></i> Mobile Optimized</div>
+            <!-- Platform Features Section -->
+            <div class="subjects-container">
+                <h2 class="subjects-title">Platform Features</h2>
+                <div class="features-grid">
+                    <div class="feature-item"><i class="fa-solid fa-book"></i> Bilingual Questions</div>
+                    <div class="feature-item"><i class="fa-solid fa-floppy-disk"></i> Auto-Save Progress</div>
+                    <div class="feature-item"><i class="fa-solid fa-bolt"></i> Instant Feedback</div>
+                    <div class="feature-item"><i class="fa-solid fa-mobile-screen"></i> Mobile Optimized</div>
+                </div>
             </div>
         </section>
 
@@ -171,7 +175,7 @@
                     </div>
                 </div>
 
-                <!-- Stats Dashboard -->
+                <!-- Stats Dashboard (Updated to 5 items) -->
                 <div class="stats-dashboard">
                     <div class="stat-item">
                         <span class="stat-label">Done</span>
@@ -188,6 +192,10 @@
                     <div class="stat-item">
                         <span class="stat-label">Wrong</span>
                         <span class="stat-value red" id="statWrong">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Accuracy</span>
+                        <span class="stat-value" id="statAccuracy" style="color:var(--accent)">0%</span>
                     </div>
                 </div>
 
@@ -417,11 +425,13 @@
         });
         
         const wrongCount = completedCount - correctCount;
+        const accuracy = completedCount > 0 ? Math.round((correctCount / completedCount) * 100) : 0;
 
         document.getElementById('statDone').innerText = completedCount;
         document.getElementById('statLeft').innerText = leftCount;
         document.getElementById('statCorrect').innerText = correctCount;
         document.getElementById('statWrong').innerText = wrongCount;
+        document.getElementById('statAccuracy').innerText = accuracy + '%';
     }
 
     // Highlighting Helper
