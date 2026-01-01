@@ -386,7 +386,13 @@ main {
     white-space: nowrap; 
 }
 
-.feature-item i { color: var(--primary); }
+/* Fix CLS: Reserve fixed space for icons immediately */
+.feature-item i, .subject-tag i { 
+    color: var(--primary); 
+    width: 1.25em; 
+    text-align: center;
+    display: inline-block;
+}
 
 /* --- Quiz Widget --- */
 .quiz-widget-wrapper {
