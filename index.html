@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AgriVantage Prime: Premium Agriculture Exam Prep. Auto-saves progress.">
+    <title>AgriVantage Prime | Smart Prep</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Modern Palette */
+            --primary: #059669; /* Emerald 600 */
+            --primary-dark: #047857;
+            --primary-light: #D1FAE5;
+            --accent: #F59E0B; /* Amber 500 */
+            --bg-gradient: linear-gradient(135deg, #F0FDF4 0%, #E0F2FE 100%);
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --text-main: #1F2937;
+            --text-sec: #4B5563;
+            
+            /* Feedback Colors */
+            --correct-bg: #D1FAE5;
+            --correct-border: #10B981;
+            --correct-text: #065F46;
+            
+            --wrong-bg: #FEE2E2;
+            --wrong-border: #EF4444;
+            --wrong-text: #991B1B;
+
+            /* Effects */
+            --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --card-radius: 16px;
+            --transition: all 0.2s ease-in-out;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            padding: 0.8rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        h1 { 
+            margin: 0; 
+            font-size: 1.1rem; 
+            font-weight: 800; 
+            color: var(--primary-dark);
+            letter-spacing: -0.02em;
+        }
+        
+        .brand-icon { font-size: 1.2rem; }
+
+        .reset-btn {
+            background: transparent;
+            border: 1px solid #E5E7EB;
+            color: var(--text-sec);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .reset-btn:hover { background: #FEE2E2; color: #991B1B; border-color: #FECACA; }
+
+        /* --- Progress Bar --- */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(0,0,0,0.05);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 101;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* --- Main Layout Grid (50/50 Ratio) --- */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 50% Hero, 50% Quiz */
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            width: 100%;
+            box-sizing: border-box;
+            flex: 1;
+            align-items: start;
+        }
+
+        /* --- Hero Section (Left - 50%) --- */
+        .hero-section {
+            padding-top: 10px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #065F46 0%, #059669 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-sec);
+            margin-bottom: 30px;
+            max-width: 95%;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .feature-item {
+            background: rgba(255,255,255,0.7);
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        /* --- Quiz Widget (Right - 50% - Compact) --- */
+        .quiz-widget-wrapper {
+            position: sticky;
+            top: 90px;
+        }
+
+        .quiz-card {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            box-shadow: var(--glass-shadow);
+            padding: 20px; /* Compact padding */
+            border: 1px solid rgba(255,255,255,0.8);
+            display: flex;
+            flex-direction: column;
+            /* Height adjustments */
+            height: auto;
+            max-height: 85vh; 
+            min-height: 450px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Widget Header */
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #F3F4F6;
+        }
+
+        .search-container {
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 12px;
+            padding-left: 32px;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+            background: #F9FAFB;
+            font-size: 0.85rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: var(--transition);
+        }
+        .search-input:focus { border-color: var(--primary); background: white; }
+        
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            color: #9CA3AF;
+        }
+
+        /* Text Size Controls */
+        .text-controls {
+            display: flex;
+            gap: 4px;
+        }
+        .text-btn {
+            background: #F3F4F6;
+            border: none;
+            color: var(--text-sec);
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .text-btn:hover { background: #E5E7EB; color: var(--text-main); }
+
+        /* Stats Dashboard */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            margin-bottom: 15px;
+            background: #F9FAFB;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-sec);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .stat-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-value.green { color: var(--primary); }
+        .stat-value.red { color: var(--wrong-border); }
+
+        /* Scrollable Content */
+        .quiz-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin-bottom: 10px;
+            /* Scrollbar styling */
+            scrollbar-width: thin;
+            scrollbar-color: #D1D5DB transparent;
+        }
+        .quiz-content::-webkit-scrollbar { width: 4px; }
+        .quiz-content::-webkit-scrollbar-thumb { background-color: #D1D5DB; border-radius: 4px; }
+
+        /* Question Styles (Adjustable via JS) */
+        .q-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.75rem;
+            color: var(--text-sec);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .q-text-en { 
+            font-weight: 700; 
+            margin-bottom: 6px; 
+            line-height: 1.35; 
+            color: #111827;
+            /* Default size, adjustable */
+            font-size: 1.05rem; 
+        }
+        
+        .q-text-hi { 
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            color: #4B5563; 
+            margin-bottom: 20px; 
+            padding-bottom: 12px; 
+            border-bottom: 1px dashed #E5E7EB;
+            line-height: 1.5;
+            /* Default size, adjustable */
+            font-size: 0.9rem;
+        }
+
+        /* Options Compact */
+        .options-list { display: flex; flex-direction: column; gap: 8px; }
+
+        .option-btn {
+            padding: 10px 14px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: left;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-main);
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: translateX(2px);
+        }
+        
+        /* Scannability States */
+        .option-btn.correct { 
+            background: var(--correct-bg); 
+            border-color: var(--correct-border); 
+            color: var(--correct-text); 
+            font-weight: 600;
+        }
+        .option-btn.wrong { 
+            background: var(--wrong-bg); 
+            border-color: var(--wrong-border); 
+            color: var(--wrong-text); 
+        }
+        
+        /* Dim unselected options when answered for easy scanning */
+        .options-list.answered .option-btn:not(.correct):not(.wrong) {
+            opacity: 0.4;
+            border-color: transparent;
+            background: #FAFAFA;
+        }
+        
+        .disabled { cursor: default; pointer-events: none; }
+        .status-icon { font-weight: bold; font-size: 1.1em; }
+
+        .feedback-msg {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* Widget Footer Controls */
+        .widget-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid #F3F4F6;
+            margin-top: auto;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .nav-btn:hover { background: var(--primary-dark); }
+        .nav-btn:disabled { background: #E5E7EB; color: #9CA3AF; cursor: not-allowed; }
+
+        .progress-text { font-size: 0.8rem; font-weight: 600; color: var(--text-sec); }
+
+        /* --- Site Footer --- */
+        .site-footer {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding: 1.5rem 0;
+            margin-top: auto; /* Pushes to bottom */
+            font-size: 0.85rem;
+            color: #9CA3AF;
+            text-align: center;
+        }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 20px 15px;
+            }
+            .hero-section { text-align: center; padding-top: 0; }
+            .hero-title { font-size: 2rem; }
+            .hero-desc { margin: 0 auto 30px; }
+            .features-grid { text-align: left; }
+            .quiz-widget-wrapper { position: relative; top: 0; }
+            .quiz-card { min-height: 400px; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-container"><div class="progress-fill" id="progressFill"></div></div>
+
+<header>
+    <div class="header-content">
+        <div class="brand">
+            <span class="brand-icon">🌿</span>
+            <h1>AgriVantage Prime</h1>
+        </div>
+        <button class="reset-btn" onclick="resetProgress()">Reset History</button>
+    </div>
+</header>
+
+<div class="main-layout">
+    
+    <!-- Left Column: Hero Content (50%) -->
+    <section class="hero-section">
+        <span class="hero-badge">Exam Ready 2025</span>
+        <h2 class="hero-title">Master Agriculture<br>Competitive Exams.</h2>
+        <p class="hero-desc">
+            Your ultimate companion for ICAR, IBPS AFO, and NABARD. 
+            Practice bilingual questions curated by experts to boost your retention and speed.
+        </p>
+        
+        <div class="features-grid">
+            <div class="feature-item"><span>📚</span> Bilingual Questions</div>
+            <div class="feature-item"><span>💾</span> Auto-Save Progress</div>
+            <div class="feature-item"><span>⚡</span> Instant Feedback</div>
+            <div class="feature-item"><span>📱</span> Mobile Optimized</div>
+        </div>
+    </section>
+
+    <!-- Right Column: Compact Quiz Widget (50%) -->
+    <section class="quiz-widget-wrapper">
+        <div class="quiz-card">
+            
+            <!-- Widget Header -->
+            <div class="widget-header">
+                <!-- Compact Search -->
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search...">
+                </div>
+                <!-- Text Size Adjuster -->
+                <div class="text-controls">
+                    <button class="text-btn" onclick="adjustFont(-1)" title="Smaller Text">A-</button>
+                    <button class="text-btn" onclick="adjustFont(1)" title="Larger Text">A+</button>
+                </div>
+            </div>
+
+            <!-- Stats Dashboard -->
+            <div class="stats-dashboard">
+                <div class="stat-item">
+                    <span class="stat-label">Done</span>
+                    <span class="stat-value" id="statDone">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Left</span>
+                    <span class="stat-value" id="statLeft">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Correct</span>
+                    <span class="stat-value green" id="statCorrect">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Wrong</span>
+                    <span class="stat-value red" id="statWrong">0</span>
+                </div>
+            </div>
+
+            <!-- Scrollable Questions Area -->
+            <div id="quizContent" class="quiz-content">
+                <div id="cardArea">
+                    <div style="text-align:center; padding: 40px; color: #9CA3AF; font-size: 0.9rem;">
+                        Loading Quiz Data...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integrated Footer Controls -->
+            <div class="widget-controls">
+                <button id="prevBtn" class="nav-btn" aria-label="Previous">← Prev</button>
+                <span class="progress-text" id="progressText">0 / 0</span>
+                <button id="nextBtn" class="nav-btn" aria-label="Next">Next →</button>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+<!-- Footer Section -->
+<footer class="site-footer">
+    &copy; 2025 AgriVantage Prime. All rights reserved.
+</footer>
+
+<!-- Data Loading -->
+<script>
+    window.quizData = []; 
+</script>
+
+<!-- Scripts for Data Parts -->
+<script src="js/part1.js"></script>
+<script src="js/part2.js"></script>
+
+<!-- Main Logic -->
+<script>
+    const STORAGE_KEY = 'agri_vantage_history_v1';
+    
+    let currentList = [];
+    let currentIndex = 0;
+    let historyState = { lastIndex: 0, answers: {} };
+    let fontLevel = 0; // 0 = default
+
+    // DOM Elements
+    const cardArea = document.getElementById('cardArea');
+    const quizContent = document.getElementById('quizContent');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressText = document.getElementById('progressText');
+    const progressFill = document.getElementById('progressFill');
+    const searchInput = document.getElementById('searchInput');
+
+    window.onload = () => {
+        // Wait 100ms for parts to load
+        setTimeout(() => {
+            if (window.quizData && window.quizData.length > 0) {
+                // Sort by ID
+                window.quizData.sort((a, b) => a.id - b.id);
+                
+                loadFromStorage();
+                currentList = [...window.quizData];
+                
+                if (historyState.lastIndex && historyState.lastIndex < currentList.length) {
+                    currentIndex = historyState.lastIndex;
+                }
+                loadQuestion(currentIndex);
+                updateStats(); // Init stats
+            } else {
+                cardArea.innerHTML = `<div style="text-align:center; color:#EF4444; padding:20px; font-size:0.9rem;">
+                    <strong>Data Missing</strong><br>
+                    Please create <code>js/part1.js</code> to start.
+                </div>`;
+            }
+        }, 100);
+    };
+
+    function adjustFont(dir) {
+        fontLevel += dir;
+        // Limit range
+        if(fontLevel > 3) fontLevel = 3;
+        if(fontLevel < -1) fontLevel = -1;
+        
+        const qEn = document.querySelector('.q-text-en');
+        const qHi = document.querySelector('.q-text-hi');
+        
+        // We re-render to apply class, or just modify inline for simplicity given dynamic content
+        // Better to re-render current question to apply styles cleanly
+        loadQuestion(currentIndex);
+    }
+
+    function getFontStyles() {
+        const baseEn = 1.05; 
+        const baseHi = 0.9;
+        const step = 0.1;
+        return {
+            en: `${baseEn + (fontLevel * step)}rem`,
+            hi: `${baseHi + (fontLevel * step)}rem`
+        };
+    }
+
+    function updateStats() {
+        // Calculate based on GLOBAL quizData and saved answers
+        const total = window.quizData.length;
+        const completedIds = Object.keys(historyState.answers);
+        const completedCount = completedIds.length;
+        const leftCount = total - completedCount;
+        
+        let correctCount = 0;
+        
+        // Count correct answers safely
+        completedIds.forEach(id => {
+            // Find the question object even if list is filtered
+            const q = window.quizData.find(item => item.id == id);
+            if (q && q.answer === historyState.answers[id]) {
+                correctCount++;
+            }
+        });
+        
+        const wrongCount = completedCount - correctCount;
+
+        // Update UI
+        document.getElementById('statDone').innerText = completedCount;
+        document.getElementById('statLeft').innerText = leftCount;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statWrong').innerText = wrongCount;
+    }
+
+    function loadQuestion(index) {
+        // Reset scroll position
+        quizContent.scrollTop = 0;
+
+        if (currentList.length === 0) {
+            cardArea.innerHTML = `<div style="text-align:center; padding:30px; font-size:0.9rem;">No match found.</div>`;
+            updateControls();
+            return;
+        }
+
+        const q = currentList[index];
+        const savedAnswer = historyState.answers[q.id];
+        const isAnswered = savedAnswer !== undefined;
+        const fontStyles = getFontStyles();
+
+        const optionsHtml = q.options.map((opt, i) => {
+            let statusClass = '';
+            let iconHtml = '';
+            
+            if (isAnswered) {
+                if (i === q.answer) { 
+                    statusClass = 'correct'; 
+                    iconHtml = '<span class="status-icon">✓</span>'; 
+                } 
+                else if (i === savedAnswer) { 
+                    statusClass = 'wrong'; 
+                    iconHtml = '<span class="status-icon">✗</span>'; 
+                }
+            }
+            
+            return `
+            <div class="option-btn ${statusClass} ${isAnswered ? 'disabled' : ''}" 
+                 onclick="handleAnswer(this, ${q.id}, ${i})">
+                <span>${opt}</span>
+                ${iconHtml}
+            </div>`;
+        }).join('');
+
+        let feedbackHtml = '';
+        if (isAnswered) {
+            const isCorrect = savedAnswer === q.answer;
+            const bg = isCorrect ? 'var(--correct-bg)' : 'var(--wrong-bg)';
+            const color = isCorrect ? 'var(--correct-text)' : 'var(--wrong-text)';
+            const text = isCorrect ? 'Correct Answer!' : `Correct: ${q.options[q.answer]}`;
+            feedbackHtml = `<div class="feedback-msg" style="display:block; background:${bg}; color:${color}">${text}</div>`;
+        }
+
+        // Add 'answered' class to list for CSS dimming
+        const listClass = isAnswered ? 'options-list answered' : 'options-list';
+
+        cardArea.innerHTML = `
+            <div class="q-meta">
+                <span>Q. ${q.id}</span>
+                <span style="color:var(--primary)">${isAnswered ? (savedAnswer === q.answer ? '✓ Solved' : '✗ Review') : 'Pending'}</span>
+            </div>
+            <div class="q-text-en" style="font-size:${fontStyles.en}">${q.questionEn}</div>
+            <div class="q-text-hi" style="font-size:${fontStyles.hi}">${q.questionHi}</div>
+            <div class="${listClass}" id="opts-${q.id}">
+                ${optionsHtml}
+            </div>
+            ${feedbackHtml}
+        `;
+
+        if (searchInput.value === '') { 
+            historyState.lastIndex = currentIndex;
+            saveToStorage();
+        }
+
+        updateControls();
+    }
+
+    window.handleAnswer = function(btn, qId, choiceIndex) {
+        const q = currentList[currentIndex];
+        historyState.answers[qId] = choiceIndex;
+        saveToStorage();
+        updateStats(); // Refresh stats immediately
+
+        // Refresh view to show correct/incorrect states properly
+        loadQuestion(currentIndex);
+    };
+
+    nextBtn.addEventListener('click', () => {
+        if (currentIndex < currentList.length - 1) {
+            currentIndex++;
+            loadQuestion(currentIndex);
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            currentIndex--;
+            loadQuestion(currentIndex);
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        // Only navigate if search input is not focused
+        if (document.activeElement !== searchInput) {
+            if (e.key === 'ArrowRight') nextBtn.click();
+            if (e.key === 'ArrowLeft') prevBtn.click();
+        }
+    });
+
+    function updateControls() {
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === currentList.length - 1;
+        progressText.innerText = `${currentIndex + 1} / ${currentList.length}`;
+        const pct = ((currentIndex + 1) / currentList.length) * 100;
+        progressFill.style.width = `${pct}%`;
+    }
+
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        if (term === '') {
+            currentList = [...window.quizData];
+            currentIndex = historyState.lastIndex < currentList.length ? historyState.lastIndex : 0;
+        } else {
+            currentList = window.quizData.filter(q => 
+                q.questionEn.toLowerCase().includes(term) || 
+                q.questionHi.includes(term) ||
+                q.id.toString() === term
+            );
+            currentIndex = 0;
+        }
+        loadQuestion(currentIndex);
+    });
+
+    function saveToStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(historyState)); }
+    function loadFromStorage() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) { try { historyState = JSON.parse(saved); if (!historyState.answers) historyState.answers = {}; } catch (e) {} }
+    }
+    window.resetProgress = function() {
+        if(confirm("Clear history?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+    };
+</script>
+</body>
+</html>
