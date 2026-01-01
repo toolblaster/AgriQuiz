@@ -8,7 +8,13 @@
     --card-bg: #FFFFFF;
     --text-main: #020617; /* Slate 950 */
     --text-sec: #334155; /* Slate 700 */
-    --border-color: #CBD5E1; /* Slate 300 */
+    
+    /* Reverted Global Border: Slate 300 */
+    --border-color: #CBD5E1; 
+    
+    /* Specific Higher Contrast Border for Quiz Widget: Slate 400 */
+    --widget-border: #94A3B8;
+
     --stats-bg: #F0FDF4; /* Mint Tint */
     --stats-border: #D1FAE5; /* Mint Border */
     --header-bg: rgba(255, 255, 255, 0.95);
@@ -44,7 +50,13 @@
     --card-bg: #1E293B; /* Slate 800 */
     --text-main: #F8FAFC; /* Slate 50 */
     --text-sec: #94A3B8; /* Slate 400 */
-    --border-color: #334155; /* Slate 700 */
+    
+    /* Reverted Global Border for Dark Mode: Slate 700 */
+    --border-color: #334155; 
+    
+    /* Specific Higher Contrast Border for Widget Dark Mode: Slate 600 */
+    --widget-border: #475569;
+
     --stats-bg: #111827; /* Gray 900 */
     --stats-border: #374151; /* Gray 700 */
     --header-bg: rgba(15, 23, 42, 0.95); /* Slate 900 */
@@ -405,7 +417,8 @@ main {
     border-radius: var(--card-radius);
     box-shadow: var(--glass-shadow);
     padding: 15px;
-    border: 1px solid var(--border-color); 
+    /* Updated to use specific higher contrast border variable */
+    border: 1px solid var(--widget-border); 
     display: flex;
     flex-direction: column;
     /* Strict dimensions for compactness on mobile */
