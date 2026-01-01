@@ -338,8 +338,7 @@ main {
 
 .search-input {
     width: 100%;
-    padding: 8px 10px; /* More compact */
-    padding-left: 30px;
+    padding: 8px 35px 8px 30px; /* Increased right padding for clear btn */
     border-radius: 8px;
     border: 1px solid #E5E7EB;
     background: #F9FAFB;
@@ -357,6 +356,61 @@ main {
     transform: translateY(-50%);
     font-size: 0.8rem;
     color: #9CA3AF;
+    pointer-events: none; /* Allow click through */
+}
+
+/* Search Clear Button */
+.search-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9CA3AF;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+    transition: var(--transition);
+    font-size: 0.8rem;
+}
+.search-clear:hover { 
+    color: var(--wrong-border); 
+    background: #FEE2E2;
+}
+.search-container.active .search-clear { display: block; }
+
+/* Highlight Search Terms */
+mark.highlight {
+    background-color: #FEF3C7; /* Amber 100 */
+    color: #92400E; /* Amber 800 */
+    padding: 0 2px;
+    border-radius: 3px;
+    font-weight: inherit;
+    border-bottom: 2px solid #FCD34D;
+}
+
+/* Empty Search State */
+.empty-state {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-sec);
+}
+.empty-state i {
+    font-size: 2.5rem;
+    color: #E5E7EB;
+    margin-bottom: 10px;
+    display: block;
+}
+.empty-state p { margin: 0; font-size: 0.9rem; }
+.empty-state button {
+    margin-top: 15px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
 }
 
 /* Text Size Controls */
@@ -386,10 +440,10 @@ main {
     grid-template-columns: repeat(4, 1fr);
     gap: 4px;
     margin-bottom: 15px;
-    background: #F9FAFB;
+    background: #F0FDF4; /* Minty Green Tint */
     padding: 8px;
     border-radius: 8px;
-    border: 1px solid #E5E7EB;
+    border: 1px solid #D1FAE5; /* Matching Light Green Border */
 }
 
 .stat-item {
