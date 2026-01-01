@@ -733,20 +733,21 @@ mark.highlight {
     margin-top: auto;
 }
 
-/* Jump Trigger - Compact & Interactive */
+/* Jump Trigger - Compact Horizontal Side-by-Side */
 .jump-trigger {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Horizontal Layout */
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    padding: 6px 14px;
-    border: 1px dashed var(--border-color); /* Visual cue for interactivity */
+    padding: 8px 12px;
+    border: 1px dashed var(--border-color);
     border-radius: 8px;
     background: rgba(0,0,0,0.02);
     transition: var(--transition);
     user-select: none;
-    min-width: 90px;
+    min-width: auto;
+    gap: 12px; /* Space between number and label */
 }
 
 [data-theme="dark"] .jump-trigger { background: rgba(255,255,255,0.02); }
@@ -768,15 +769,17 @@ mark.highlight {
 }
 
 .jump-label {
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     color: var(--primary);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-top: 3px;
+    margin-top: 0; /* No vertical margin needed for row layout */
     display: flex;
     align-items: center;
     gap: 4px;
+    padding-left: 12px; /* Inner padding for separator */
+    border-left: 1px solid var(--border-color); /* Vertical separator line */
 }
 
 .jump-trigger:hover .jump-label i {
