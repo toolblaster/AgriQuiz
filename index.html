@@ -510,8 +510,12 @@
 
     function getFontSize() {
         // Unified size logic for Question and Options
-        const baseSize = 0.95; 
-        const step = 0.15; 
+        const baseSize = 0.9; // Adjusted base size to 0.9rem (approx 14.4px)
+        const step = 0.1; // Adjusted step to 0.1rem
+        // Current Level Logic:
+        // Level -1 (Default): 0.9 + 0 = 0.9rem (~14.4px)
+        // Level 0 (First +): 0.9 + 0.1 = 1.0rem (16px) - User Requested
+        // Level 1: 1.1rem (~17.6px)
         const offset = fontLevel + 1; 
         return `${baseSize + (offset * step)}rem`;
     }
