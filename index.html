@@ -336,7 +336,7 @@
 
 <!-- Footer Section -->
 <footer class="site-footer">
-    &copy; 2026 AgriQuiz by toolblaster.com. All rights reserved.
+    &copy; 2026 AgriQuiz by <a href="https://toolblaster.com" style="color: var(--primary-dark); text-decoration: none; font-weight: 600;">toolblaster.com</a>. All rights reserved.
 </footer>
 
 <!-- Data Loading -->
@@ -357,7 +357,8 @@
     let currentList = [];
     let currentIndex = 0;
     let historyState = { lastIndex: 0, answers: {} };
-    let fontLevel = 0; // 0 = default
+    // Changed default to -1 (A-) as requested for fresh load preference
+    let fontLevel = -1; 
     let currentSearchTerm = '';
 
     // DOM Elements
@@ -402,14 +403,21 @@
         loadQuestion(currentIndex);
     }
 
-    function getFontStyles() {
-        const baseEn = 1.05; 
-        const baseHi = 0.9;
-        const step = 0.1;
-        return {
-            en: `${baseEn + (fontLevel * step)}rem`,
-            hi: `${baseHi + (fontLevel * step)}rem`
-        };
+    function getFontSize() {
+        // Unified size logic for Question and Options
+        // Level -1 (Default/A-): 0.95rem
+        // Level 0: 1.10rem
+        // ...
+        // Level 3 (A+): ~1.55rem
+        
+        const baseSize = 0.95; 
+        const step = 0.15; 
+        
+        // Calculate offset from lowest level (-1)
+        // Level -1 -> offset 0
+        const offset = fontLevel + 1; 
+        
+        return `${baseSize + (offset * step)}rem`;
     }
 
     function updateStats() {
@@ -462,7 +470,9 @@
         const q = currentList[index];
         const savedAnswer = historyState.answers[q.id];
         const isAnswered = savedAnswer !== undefined;
-        const fontStyles = getFontStyles();
+        
+        // Get unified font size
+        const fontSize = getFontSize();
 
         // Apply highlighting
         const qEnText = highlightText(q.questionEn, currentSearchTerm);
@@ -486,8 +496,10 @@
                 }
             }
             
+            // Applied inline style for font-size to ensure option buttons resize with the adjuster
             return `
             <div class="option-btn ${statusClass} ${isAnswered ? 'disabled' : ''}" 
+                 style="font-size: ${fontSize};"
                  onclick="handleAnswer(this, ${q.id}, ${i})">
                 <span>${optText}</span>
                 ${iconHtml}
@@ -516,8 +528,8 @@
                 <span>Q. ${q.id}</span>
                 <span style="color:var(--primary)">${statusDisplay}</span>
             </div>
-            <div class="q-text-en" style="font-size:${fontStyles.en}">${qEnText}</div>
-            <div class="q-text-hi" style="font-size:${fontStyles.hi}">${qHiText}</div>
+            <div class="q-text-en" style="font-size:${fontSize}">${qEnText}</div>
+            <div class="q-text-hi" style="font-size:${fontSize}">${qHiText}</div>
             <div class="${listClass}" id="opts-${q.id}">
                 ${optionsHtml}
             </div>
