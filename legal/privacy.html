@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Privacy Policy | AgriQuiz</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../js/style.css">
+    
+    <style>
+        /* Dense & Compact Override Styles (Matching Terms Page) */
+        body { font-size: 14px; }
+        
+        .legal-wrapper { 
+            max-width: 900px; 
+            margin: 20px auto; 
+            padding: 0 15px; 
+        }
+        
+        .legal-card { 
+            background: var(--card-bg); 
+            padding: 25px 30px;
+            border-radius: 12px; 
+            box-shadow: var(--glass-shadow); 
+            border: 1px solid var(--border-color); 
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+        }
+
+        .legal-title { 
+            font-size: 1.5rem; 
+            color: var(--primary-dark); 
+            margin: 0; 
+            font-weight: 800; 
+            line-height: 1.2;
+        }
+
+        .last-updated { 
+            font-size: 0.75rem; 
+            color: var(--text-sec); 
+            font-weight: 600;
+        }
+
+        .policy-section { margin-bottom: 15px; }
+
+        h2 { 
+            color: var(--text-main); 
+            font-size: 1rem; 
+            margin: 0 0 6px 0; 
+            font-weight: 700; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        h2 i { color: var(--primary); font-size: 0.9rem; }
+
+        p, li { 
+            line-height: 1.5; 
+            color: var(--text-sec); 
+            margin-bottom: 6px; 
+            text-align: justify;
+        }
+
+        ul { 
+            padding-left: 18px; 
+            margin: 4px 0 8px 0; 
+        }
+
+        li { margin-bottom: 2px; }
+
+        .back-link { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            color: var(--text-sec); 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 0.85rem; 
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--primary); }
+
+        @media (min-width: 768px) {
+            .compact-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .full-width { grid-column: 1 / -1; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="legal-wrapper">
+        <a href="https://agriquiz.toolblaster.com" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Quiz</a>
+        
+        <div class="legal-card">
+            <div class="header-row">
+                <h1 class="legal-title">Privacy Policy</h1>
+                <span class="last-updated">Updated: Jan 2026</span>
+            </div>
+
+            <p class="full-width" style="margin-bottom: 20px; font-weight: 500;">
+                At AgriQuiz ("we", "our"), we believe in cultivating knowledge, not harvesting your personal data.
+            </p>
+
+            <div class="compact-grid">
+                <!-- Left Column -->
+                <div>
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-user-shield"></i> 1. No Data Collection</h2>
+                        <p>We do not require you to create an account, sign up, or provide any personal identification information (PII) such as your name, email, or phone number.</p>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-hard-drive"></i> 2. Local Storage</h2>
+                        <p>To enhance your experience, we use Local Storage on your device to save:</p>
+                        <ul>
+                            <li>Quiz progress & scores.</li>
+                            <li>Theme preferences (Dark/Light).</li>
+                        </ul>
+                        <p><strong>Note:</strong> This data remains 100% on your device and is never sent to our servers.</p>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-bullhorn"></i> 3. Ads & Cookies</h2>
+                        <p>We may display ads (e.g., Google AdSense) to keep this tool free. Vendors use cookies to serve ads based on prior visits.</p>
+                        <ul>
+                            <li>Google uses advertising cookies for ad personalization.</li>
+                            <li>Opt-out at <a href="https://www.google.com/settings/ads" target="_blank" rel="nofollow" style="color:var(--primary);">Google Ad Settings</a>.</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-chart-pie"></i> 4. Analytics</h2>
+                        <p>We use anonymous, aggregated analytics to track popular quiz topics. This data cannot identify individual users.</p>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-envelope"></i> 5. Contact Us</h2>
+                        <p>Questions? Contact the developer at <a href="mailto:hello@toolblaster.com" style="color:var(--primary); text-decoration:none;">hello@toolblaster.com</a> or via <a href="https://toolblaster.com" target="_blank" style="color:var(--primary);">ToolBlaster.com</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>

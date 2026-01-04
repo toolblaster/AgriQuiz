@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Terms of Service | AgriQuiz</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../js/style.css">
+    
+    <style>
+        /* Dense & Compact Override Styles */
+        body { font-size: 14px; }
+        
+        .legal-wrapper { 
+            max-width: 900px; 
+            margin: 20px auto; 
+            padding: 0 15px; 
+        }
+        
+        .legal-card { 
+            background: var(--card-bg); 
+            padding: 25px 30px;
+            border-radius: 12px; 
+            box-shadow: var(--glass-shadow); 
+            border: 1px solid var(--border-color); 
+        }
+
+        .header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+        }
+
+        .legal-title { 
+            font-size: 1.5rem; 
+            color: var(--primary-dark); 
+            margin: 0; 
+            font-weight: 800; 
+            line-height: 1.2;
+        }
+
+        .last-updated { 
+            font-size: 0.75rem; 
+            color: var(--text-sec); 
+            font-weight: 600;
+        }
+
+        .policy-section { margin-bottom: 15px; }
+
+        h2 { 
+            color: var(--text-main); 
+            font-size: 1rem; 
+            margin: 0 0 6px 0; 
+            font-weight: 700; 
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        h2 i { color: var(--primary); font-size: 0.9rem; }
+
+        p, li { 
+            line-height: 1.5; 
+            color: var(--text-sec); 
+            margin-bottom: 6px; 
+            text-align: justify;
+        }
+
+        ul { 
+            padding-left: 18px; 
+            margin: 4px 0 8px 0; 
+        }
+
+        li { margin-bottom: 2px; }
+
+        .back-link { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            color: var(--text-sec); 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 0.85rem; 
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--primary); }
+
+        @media (min-width: 768px) {
+            .compact-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .full-width { grid-column: 1 / -1; }
+        }
+    </style>
+</head>
+<body>
+
+    <main class="legal-wrapper">
+        <a href="https://agriquiz.toolblaster.com" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Quiz</a>
+        
+        <div class="legal-card">
+            <div class="header-row">
+                <h1 class="legal-title">Terms of Service</h1>
+                <span class="last-updated">Updated: Jan 2026</span>
+            </div>
+
+            <p class="full-width" style="margin-bottom: 20px; font-weight: 500;">
+                By accessing AgriQuiz, you agree to cultivate your mind according to these terms.
+            </p>
+
+            <div class="compact-grid">
+                <!-- Left Column -->
+                <div>
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-scale-balanced"></i> 1. Educational License</h2>
+                        <p>AgriQuiz is an open resource. You are granted a limited license for personal, non-commercial study. You may not:</p>
+                        <ul>
+                            <li>Modify, reverse engineer, or decompile code.</li>
+                            <li>Scrape or mass-export data for resale.</li>
+                            <li>Remove proprietary notations.</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-check-double"></i> 2. Accuracy</h2>
+                        <p>While we strive for a bountiful harvest of facts, materials are provided "as is". We make no warranties regarding absolute accuracy or reliability of specific data points.</p>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-hard-drive"></i> 3. User Data</h2>
+                        <p>Progress is stored <strong>locally</strong> on your device. We are not liable for data loss due to cache clearing, device failure, or accidental deletion. Please backup periodically.</p>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-link"></i> 4. Third-Party Links</h2>
+                        <p>We may link to third-party sites or ads. We assume no responsibility for the content, privacy policies, or practices of any third-party services.</p>
+                    </div>
+
+                    <div class="policy-section">
+                        <h2><i class="fa-solid fa-gavel"></i> 5. Changes</h2>
+                        <p>We may update these terms occasionally. Continued use of the platform indicates acceptance of any new terms.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>
