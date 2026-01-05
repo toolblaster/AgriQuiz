@@ -3,47 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn about AgriQuiz, the ultimate platform for agriculture quiz questions and answers. Designed for ICAR, IBPS AFO, and NABARD aspirants to master agricultural concepts.">
-    <meta name="keywords" content="agriculture quiz, agriculture quiz questions and answers, agriculture gk, agri exam prep, ICAR quiz, IBPS AFO mock test">
-    <title>About AgriQuiz | Premier Agriculture Quiz Questions and Answers</title>
+    <meta name="description" content="About AgriQuiz: Your dedicated digital companion for mastering comprehensive agriculture quiz questions and answers. Designed for precision, speed, and reliability.">
+    <title>About AgriQuiz | ToolBlaster</title>
     
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+    <link rel="manifest" href="../favicon/site.webmanifest">
+    <link rel="shortcut icon" href="../favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#059669">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="js/style.css">
-    
-    <!-- JSON-LD Structured Data for SEO -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "AboutPage",
-      "name": "About AgriQuiz",
-      "description": "Comprehensive details about the AgriQuiz platform, its purpose for agriculture students, and benefits for competitive exam preparation.",
-      "url": "https://agriquiz.toolblaster.com/about.html",
-      "mainEntity": {
-        "@type": "SoftwareApplication",
-        "name": "AgriQuiz",
-        "applicationCategory": "EducationalApplication",
-        "operatingSystem": "Web",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        },
-        "description": "An interactive bilingual agriculture quiz platform featuring 400+ questions and answers for exam preparation.",
-        "featureList": [
-          "Bilingual (English & Hindi) Questions",
-          "Offline Local Storage Capability",
-          "Instant Feedback System",
-          "Dark Mode Support"
-        ]
-      }
-    }
-    </script>
+    <link rel="stylesheet" href="../js/style.css">
     
     <style>
-        /* Consistent Styling with Legal Pages */
+        /* Exact Match Styles from Privacy/Terms Page for Consistency */
         body { font-size: 14px; }
         
         .legal-wrapper { 
@@ -54,7 +34,7 @@
         
         .legal-card { 
             background: var(--card-bg); 
-            padding: 30px 35px;
+            padding: 25px 30px;
             border-radius: 12px; 
             box-shadow: var(--glass-shadow); 
             border: 1px solid var(--border-color); 
@@ -64,13 +44,13 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-bottom: 2px solid var(--primary-light);
-            padding-bottom: 15px;
+            padding-bottom: 10px;
         }
 
         .legal-title { 
-            font-size: 1.75rem; 
+            font-size: 1.5rem; 
             color: var(--primary-dark); 
             margin: 0; 
             font-weight: 800; 
@@ -83,38 +63,46 @@
             font-weight: 600;
         }
 
-        .policy-section { margin-bottom: 25px; }
+        /* Section Layout Style - "Boxed" look for each section */
+        .section-box {
+            background: var(--stats-bg); /* Very light background from theme */
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            height: auto;
+        }
 
         h2 { 
             color: var(--text-main); 
-            font-size: 1.1rem; 
-            margin: 0 0 10px 0; 
-            font-weight: 700; 
+            font-size: 1rem; 
+            margin: 0 0 8px 0; 
+            font-weight: 800; 
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
-        h2 i { color: var(--primary); font-size: 1rem; }
+        h2 i { color: var(--primary); font-size: 0.9rem; }
 
         p, li { 
-            line-height: 1.6; 
+            line-height: 1.5; 
             color: var(--text-sec); 
-            margin-bottom: 8px; 
+            margin-bottom: 6px; 
             text-align: justify;
+            font-size: 0.9rem;
         }
 
         ul { 
-            padding-left: 20px; 
-            margin: 8px 0 15px 0; 
+            padding-left: 18px; 
+            margin: 4px 0 8px 0; 
         }
 
         li { margin-bottom: 4px; }
-        
-        /* Highlight specific keywords for emphasis without breaking flow */
-        strong { color: var(--text-main); font-weight: 600; }
+
+        strong { color: var(--primary-dark); font-weight: 700; }
 
         .back-link { 
             display: inline-flex; 
@@ -124,7 +112,7 @@
             text-decoration: none; 
             font-weight: 600; 
             font-size: 0.85rem; 
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             transition: color 0.2s;
         }
         .back-link:hover { color: var(--primary); }
@@ -133,7 +121,7 @@
             .compact-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                gap: 30px;
+                gap: 20px;
             }
             .full-width { grid-column: 1 / -1; }
         }
@@ -142,7 +130,8 @@
 <body>
 
     <main class="legal-wrapper">
-        <a href="https://agriquiz.toolblaster.com" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Quiz</a>
+        <!-- Navigation -->
+        <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Quiz</a>
         
         <div class="legal-card">
             <div class="header-row">
@@ -150,25 +139,25 @@
                 <span class="last-updated">Updated: Jan 2026</span>
             </div>
 
-            <p class="full-width" style="margin-bottom: 25px; font-weight: 500; font-size: 1.05rem;">
-                Welcome to <strong>AgriQuiz</strong>, your dedicated digital companion for mastering comprehensive <strong>agriculture quiz questions and answers</strong>. Designed for precision, speed, and reliability.
+            <p class="full-width" style="margin-bottom: 25px; font-weight: 500;">
+                Welcome to <strong>AgriQuiz</strong>, your dedicated digital companion for mastering comprehensive agriculture quiz questions and answers. Designed for precision, speed, and reliability.
             </p>
 
             <div class="compact-grid">
                 <!-- Left Column -->
                 <div>
-                    <div class="policy-section">
+                    <div class="section-box">
                         <h2><i class="fa-solid fa-seedling"></i> 1. Why AgriQuiz Exists?</h2>
                         <p>In the rapidly evolving field of agricultural sciences, students often struggle to find consolidated, high-quality practice material. AgriQuiz was built to fill this void. We provide a streamlined platform where users can access hundreds of curated <strong>agriculture quiz questions</strong> without the distraction of clutter, heavy ads, or mandatory sign-ups.</p>
                     </div>
 
-                    <div class="policy-section">
+                    <div class="section-box">
                         <h2><i class="fa-solid fa-bullseye"></i> 2. Purpose of the Quiz</h2>
                         <p>The core purpose of this platform is to facilitate <strong>Active Recall</strong>. Passive reading of textbooks often leads to low retention. By engaging with our <strong>agriculture quiz questions and answers</strong>, you force your brain to retrieve information, strengthening neural pathways and drastically improving memory retention for exams like ICAR and IBPS AFO.</p>
                     </div>
 
-                    <div class="policy-section">
-                        <h2><i class="fa-solid fa-layer-group"></i> 3. Importance of This Tool</h2>
+                    <div class="section-box">
+                        <h2><i class="fa-solid fa-star"></i> 3. Importance of This Tool</h2>
                         <p>Success in competitive exams relies on speed and accuracy. AgriQuiz helps you:</p>
                         <ul>
                             <li><strong>Identify Weak Areas:</strong> Immediate feedback on wrong answers highlights topics needing revision.</li>
@@ -180,7 +169,7 @@
 
                 <!-- Right Column -->
                 <div>
-                    <div class="policy-section">
+                    <div class="section-box">
                         <h2><i class="fa-solid fa-users"></i> 4. Who Will Benefit?</h2>
                         <p>Our database of <strong>agriculture quiz questions and answers</strong> is tailored for a wide audience:</p>
                         <ul>
@@ -190,8 +179,8 @@
                         </ul>
                     </div>
 
-                    <div class="policy-section">
-                        <h2><i class="fa-solid fa-laptop-code"></i> 5. Technical Advantages</h2>
+                    <div class="section-box">
+                        <h2><i class="fa-solid fa-microchip"></i> 5. Technical Advantages</h2>
                         <p>AgriQuiz isn't just a list of questions; it's a modern progressive web application designed for performance:</p>
                         <ul>
                             <li><strong>Bilingual Support:</strong> Questions are available in both English and Hindi to bridge language barriers.</li>
@@ -199,10 +188,11 @@
                             <li><strong>Fast & Light:</strong> Optimized code ensures the quiz loads instantly even on 2G/3G networks in rural areas.</li>
                         </ul>
                     </div>
-                    
-                    <div class="policy-section">
-                         <h2><i class="fa-solid fa-envelope"></i> Contact</h2>
-                         <p>Have suggestions for new <strong>agriculture quiz questions</strong>? Reach out at <a href="mailto:hello@toolblaster.com" style="color:var(--primary); text-decoration:none;">hello@toolblaster.com</a>.</p>
+
+                    <div class="section-box">
+                        <h2><i class="fa-solid fa-envelope"></i> Contact</h2>
+                        <p>Have suggestions for new <strong>agriculture quiz questions</strong>?</p>
+                        <p style="margin-top: 5px;">Reach out at <a href="mailto:hello@toolblaster.com" style="color:var(--primary); text-decoration:none; font-weight:700;">hello@toolblaster.com</a>.</p>
                     </div>
                 </div>
             </div>
