@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <!-- Background: Rounded Green Square -->
+    <rect width="100" height="100" rx="20" fill="#059669"/>
+    
+    <!-- Icon: White Leaf Shape -->
+    <path d="M50 20c0 0-30 25-30 45 0 15 10 25 30 25s30-10 30-25c0-20-30-45-30-45z" fill="#ffffff"/>
+    
+    <!-- Detail: Green Central Vein -->
+    <path d="M50 90V45" stroke="#059669" stroke-width="6" stroke-linecap="round"/>
+</svg>
