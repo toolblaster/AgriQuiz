@@ -102,7 +102,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
     <link rel="manifest" href="favicon/site.webmanifest">
     <link rel="shortcut icon" href="favicon/favicon.ico">
-    <meta name="msapplication-TileColor" content="#059669">
+    <meta name="msapplication-TileColor" content="#047857">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Fonts -->
@@ -115,6 +115,55 @@
 
     <!-- CSS Linked -->
     <link rel="stylesheet" href="js/style.css">
+    
+    <!-- ACCESSIBILITY OVERRIDES: Ensuring WCAG AA Contrast Compliance -->
+    <style>
+        :root {
+            /* Contrast Fix: 
+               Original Green (#059669) was ~3.0:1 against white (Fail).
+               New Green (#047857) is ~4.5:1 against white (Pass AA).
+            */
+            --primary: #047857; 
+            --primary-hover: #065f46;
+            
+            /* Darker text for secondary information to pass 4.5:1 */
+            --text-sec: #4b5563; 
+            
+            /* Status colors tuned for better visibility */
+            --correct-text: #14532d; /* Darker green text */
+            --wrong-text: #7f1d1d; /* Darker red text */
+            
+            --heading-text: #1f2937; /* Dark Grey for headings */
+            --body-text: #374151; /* Dark Grey for body text */
+        }
+
+        /* Dark Mode Adjustments */
+        [data-theme="dark"] {
+            /* Lighter green against dark background for visibility */
+            --primary: #34d399; 
+            --text-sec: #d1d5db;
+            
+            --correct-text: #86efac;
+            --wrong-text: #fca5a5;
+            
+            --heading-text: #f9fafb;
+            --body-text: #e5e7eb;
+        }
+
+        /* Focus indicators for keyboard accessibility */
+        :focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        /* Specific Overrides for Content Cards to guarantee contrast */
+        .seo-card h3 {
+            color: var(--heading-text) !important;
+        }
+        .seo-card p, .seo-list li {
+            color: var(--body-text) !important;
+        }
+    </style>
 
     <!-- Theme Initialization Script -->
     <script>
@@ -259,7 +308,8 @@
                 <!-- Scrollable Questions Area -->
                 <div id="quizContent" class="quiz-content">
                     <div id="cardArea">
-                        <div style="text-align:center; padding: 40px; color: #9CA3AF; font-size: 0.9rem;">
+                        <!-- Accessibility Fix: Changed color from #9CA3AF (Low Contrast) to #4B5563 (WCAG AA Compliant) -->
+                        <div style="text-align:center; padding: 40px; color: #4B5563; font-size: 0.9rem;">
                             Loading Quiz Data...
                         </div>
                     </div>
@@ -399,6 +449,50 @@
     <!-- Modern Separator Line -->
     <div class="section-separator"></div>
 
+    <!-- NEW SECTION: Useful Resources (Outbound & Interlinking) -->
+    <section class="seo-content-wrapper">
+        <div class="seo-header">
+            <h2><i class="fa-solid fa-link" style="color: var(--primary); margin-right: 10px;"></i>Useful Resources</h2>
+            <p>Direct links to official agricultural boards and platform information.</p>
+        </div>
+        
+        <div class="seo-grid">
+            <!-- Outbound Links to Authority Sites -->
+            <div class="seo-card">
+                <h3><i class="fa-solid fa-building-columns"></i> Official Boards</h3>
+                <p>Visit official websites for notifications and syllabi:</p>
+                <ul class="seo-list" style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 8px;"><a href="https://icar.org.in/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-weight: 600;"><i class="fa-solid fa-external-link-alt" style="margin-right: 5px;"></i> ICAR Official</a></li>
+                    <li style="margin-bottom: 8px;"><a href="https://www.ibps.in/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-weight: 600;"><i class="fa-solid fa-external-link-alt" style="margin-right: 5px;"></i> IBPS Official</a></li>
+                    <li><a href="https://www.nabard.org/" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-weight: 600;"><i class="fa-solid fa-external-link-alt" style="margin-right: 5px;"></i> NABARD Official</a></li>
+                </ul>
+            </div>
+
+            <!-- Internal Interlinking -->
+            <div class="seo-card">
+                <h3><i class="fa-solid fa-circle-info"></i> Platform Info</h3>
+                <p>Learn more about our data handling and terms:</p>
+                <ul class="seo-list" style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 8px;"><a href="legal/about.html" style="color: var(--primary); text-decoration: none; font-weight: 600;"><i class="fa-solid fa-arrow-right" style="margin-right: 5px;"></i> About AgriQuiz</a></li>
+                    <li style="margin-bottom: 8px;"><a href="legal/privacy.html" style="color: var(--primary); text-decoration: none; font-weight: 600;"><i class="fa-solid fa-arrow-right" style="margin-right: 5px;"></i> Privacy Policy</a></li>
+                    <li><a href="legal/terms.html" style="color: var(--primary); text-decoration: none; font-weight: 600;"><i class="fa-solid fa-arrow-right" style="margin-right: 5px;"></i> Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <!-- Cross-Linking to Main Domain -->
+            <div class="seo-card">
+                <h3><i class="fa-solid fa-laptop-code"></i> Developer</h3>
+                <p>Built by ToolBlaster. Explore more:</p>
+                <ul class="seo-list" style="list-style: none; padding-left: 0;">
+                    <li><a href="https://toolblaster.com" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-weight: 600;"><i class="fa-solid fa-rocket" style="margin-right: 5px;"></i> More Tools @ ToolBlaster</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modern Separator Line -->
+    <div class="section-separator"></div>
+
     <!-- How to & FAQ Section -->
     <section class="seo-content-wrapper">
         <div class="seo-header">
@@ -412,7 +506,8 @@
                 <p>Maximize your study sessions with these simple steps:</p>
                 <ul class="seo-list">
                     <li><strong>Start:</strong> Read the bilingual question (English/Hindi).</li>
-                    <li><strong>Answer:</strong> Tap an option. <span style="color:var(--primary)">Green</span> is correct, <span style="color:#EF4444">Red</span> is wrong.</li>
+                    <!-- Updated with high contrast variables for Green/Red text -->
+                    <li><strong>Answer:</strong> Tap an option. <span style="color:var(--correct-text)">Green</span> is correct, <span style="color:var(--wrong-text)">Red</span> is wrong.</li>
                     <li><strong>Navigate:</strong> Use "Next", "Prev", or "Jump To" to move around.</li>
                     <li><strong>Search:</strong> Find topics like "Rice" or "Soil" instantly.</li>
                 </ul>
