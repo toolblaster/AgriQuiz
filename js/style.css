@@ -587,6 +587,69 @@ mark.highlight {
     color: #FCD34D;
 }
 
+/* Mistake Filter Button */
+.mistake-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-sec);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.mistake-btn:hover {
+    background: var(--border-color);
+    color: var(--wrong-text);
+}
+
+.mistake-btn.active {
+    background: #FFE4E6; /* Rose 100 */
+    border-color: #E11D48; /* Rose 600 */
+    color: #BE123C; /* Rose 700 */
+}
+[data-theme="dark"] .mistake-btn.active {
+    background: #881337;
+    border-color: #F43F5E;
+    color: #FECDD3;
+}
+
+/* NEW: Shuffle Button */
+.shuffle-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-sec);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.shuffle-btn:hover {
+    background: var(--border-color);
+    color: #7C3AED; /* Violet 600 */
+}
+
+.shuffle-btn.active {
+    background: #EDE9FE; /* Violet 100 */
+    border-color: #8B5CF6; /* Violet 500 */
+    color: #6D28D9; /* Violet 700 */
+}
+[data-theme="dark"] .shuffle-btn.active {
+    background: #4C1D95; /* Violet 900 */
+    border-color: #7C3AED; /* Violet 600 */
+    color: #DDD6FE; /* Violet 200 */
+}
 
 /* Stats Dashboard - Modern Compact Strip */
 .stats-dashboard {
