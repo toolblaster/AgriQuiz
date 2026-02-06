@@ -301,8 +301,12 @@
                         <input type="text" id="searchInput" class="search-input" placeholder="Search topics...">
                         <i class="fa-solid fa-xmark search-clear" id="searchClear" onclick="clearSearch()" title="Clear Search"></i>
                     </div>
-                    <!-- Text Size Adjuster -->
+                    <!-- Text Size Adjuster & Bookmark Filter -->
                     <div class="text-controls">
+                        <!-- Bookmark Filter Button -->
+                        <button class="bookmark-btn" id="bookmarkFilterBtn" onclick="toggleBookmarkFilter()" title="Show Bookmarked Questions">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </button>
                         <button class="text-btn" onclick="adjustFont(-1)" title="Smaller Text">A-</button>
                         <button class="text-btn" onclick="adjustFont(1)" title="Larger Text">A+</button>
                     </div>
@@ -635,10 +639,13 @@
     
     let currentList = [];
     let currentIndex = 0;
-    let historyState = { lastIndex: 0, answers: {} };
+    // historyState schema: { lastIndex: number, answers: { id: index }, bookmarks: [id, id] }
+    let historyState = { lastIndex: 0, answers: {}, bookmarks: [] };
+    
     // Changed default to -1 (A-) as requested for fresh load preference
     let fontLevel = -1; 
     let currentSearchTerm = '';
+    let isBookmarkFilterActive = false; // State for bookmark filtering
 
     // DOM Elements
     const cardArea = document.getElementById('cardArea');
@@ -651,6 +658,7 @@
     const searchContainer = document.getElementById('searchContainer');
     const themeBtn = document.getElementById('themeBtn');
     const jumpTrigger = document.getElementById('jumpTrigger');
+    const bookmarkFilterBtn = document.getElementById('bookmarkFilterBtn');
 
     window.onload = () => {
         // Set dynamic year for evergreen footer
@@ -721,6 +729,8 @@
                 const contents = JSON.parse(e.target.result);
                 if (contents && contents.answers) {
                     historyState = contents;
+                    // Backward compatibility for bookmarks
+                    if(!historyState.bookmarks) historyState.bookmarks = [];
                     saveToStorage();
                     
                     // Reset to last index in imported data
@@ -730,7 +740,7 @@
                         currentIndex = 0;
                     }
                     
-                    loadQuestion(currentIndex);
+                    applyFilters(); // Re-apply filters including bookmarks if active
                     updateStats();
                     alert('Progress restored successfully!');
                 } else {
@@ -801,12 +811,20 @@
     function loadQuestion(index) {
         quizContent.scrollTop = 0;
 
-        if (currentList.length === 0) {
+        if (!currentList || currentList.length === 0) {
+            // Differentiate Empty State
+            let message = '';
+            if (isBookmarkFilterActive) {
+                message = `<p>No bookmarks found.<br><span style="font-size:0.8em; color:var(--text-sec)">Tap the <i class="fa-regular fa-bookmark"></i> icon on any question to save it here.</span></p>`;
+            } else {
+                message = `<p>No matches found for "<strong>${currentSearchTerm}</strong>"</p>`;
+            }
+
             cardArea.innerHTML = `
                 <div class="empty-state">
                     <i class="fa-solid fa-file-circle-question"></i>
-                    <p>No matches found for "<strong>${currentSearchTerm}</strong>"</p>
-                    <button onclick="clearSearch()">Clear Search</button>
+                    ${message}
+                    ${currentSearchTerm ? '<button onclick="clearSearch()">Clear Search</button>' : ''}
                 </div>`;
             updateControls();
             return;
@@ -816,6 +834,7 @@
         const savedAnswer = historyState.answers[q.id];
         // Ensure strictly that it is a number (index) to avoid 'null' or garbage causing locked state
         const isAnswered = (savedAnswer !== undefined && savedAnswer !== null && typeof savedAnswer === 'number');
+        const isBookmarked = historyState.bookmarks.includes(q.id);
         
         // Get unified font size
         const fontSize = getFontSize();
@@ -870,10 +889,16 @@
                 : '<i class="fa-solid fa-xmark"></i> Review') 
             : 'Pending';
 
+        // Bookmark Icon Class
+        const bookmarkIconClass = isBookmarked ? 'fa-solid fa-bookmark active' : 'fa-regular fa-bookmark';
+
         cardArea.innerHTML = `
             <div class="q-meta">
                 <span>Q. ${q.id}</span>
-                <span style="color:var(--primary)">${statusDisplay}</span>
+                <span style="display:flex; align-items:center;">
+                    <span style="color:var(--primary)">${statusDisplay}</span>
+                    <i class="${bookmarkIconClass} bookmark-icon" onclick="toggleBookmark('${q.id}')" title="Bookmark Question"></i>
+                </span>
             </div>
             <div class="q-text-en" style="font-size:${fontSize}">${qEnText}</div>
             <div class="q-text-hi" style="font-size:${fontSize}">${qHiText}</div>
@@ -883,13 +908,95 @@
             ${feedbackHtml}
         `;
 
-        // Only save position if NOT searching to prevent overwriting 'bookmark' with search index
-        if (searchInput.value === '') { 
+        // Only save position if NOT searching and NOT filtering bookmarks to preserve "Main" progress
+        if (searchInput.value === '' && !isBookmarkFilterActive) { 
             historyState.lastIndex = currentIndex;
             saveToStorage();
         }
 
         updateControls();
+    }
+
+    // Bookmark Logic
+    window.toggleBookmark = function(qId) {
+        qId = parseInt(qId);
+        const idx = historyState.bookmarks.indexOf(qId);
+        
+        if (idx > -1) {
+            // Remove
+            historyState.bookmarks.splice(idx, 1);
+        } else {
+            // Add
+            historyState.bookmarks.push(qId);
+        }
+        
+        saveToStorage();
+        
+        // If we are currently viewing the bookmark list and remove one, we should probably stay on the current view 
+        // until the user navigates, or refresh the list. 
+        // Better UX: Refresh the UI for the current card immediately. 
+        // If in filter mode, the card effectively disappears from the 'valid' list, 
+        // but let's just re-render to update the icon state first.
+        loadQuestion(currentIndex); 
+        
+        // If filter is active, we should re-apply filters to ensure the list count updates correctly on next nav
+        if (isBookmarkFilterActive) {
+            applyFilters(false); // Apply but don't reset index immediately to avoid jumping while reading
+        }
+    };
+
+    window.toggleBookmarkFilter = function() {
+        isBookmarkFilterActive = !isBookmarkFilterActive;
+        const btn = document.getElementById('bookmarkFilterBtn');
+        
+        if (isBookmarkFilterActive) {
+            btn.classList.add('active');
+            btn.innerHTML = '<i class="fa-solid fa-bookmark"></i>'; // Solid icon
+            // Clear search when entering bookmarks for clarity, or keep combined? 
+            // Better to combine for "Search inside bookmarks"
+        } else {
+            btn.classList.remove('active');
+            btn.innerHTML = '<i class="fa-regular fa-bookmark"></i>'; // Outline icon
+        }
+        
+        applyFilters(true); // True = reset index to 0
+    };
+
+    function applyFilters(resetIndex = false) {
+        const term = currentSearchTerm;
+        
+        // Base list
+        let filtered = window.quizData;
+
+        // 1. Filter by Bookmarks
+        if (isBookmarkFilterActive) {
+            filtered = filtered.filter(q => historyState.bookmarks.includes(q.id));
+        }
+
+        // 2. Filter by Search Term
+        if (term && term !== '') {
+             filtered = filtered.filter(q => {
+                const qEn = q.questionEn ? q.questionEn.toLowerCase() : '';
+                const qHi = q.questionHi ? q.questionHi.toLowerCase() : ''; 
+                const qId = q.id ? q.id.toString() : '';
+                const optionsStr = q.options ? q.options.join(' ').toLowerCase() : '';
+                return qEn.includes(term) || qHi.includes(term) || qId.includes(term) || optionsStr.includes(term);
+            });
+        }
+
+        currentList = filtered;
+        
+        // Handle Index
+        if (resetIndex) {
+            currentIndex = 0;
+        } else {
+            // If the current question is still in the list, keep index, else go to 0
+            if (currentIndex >= currentList.length) {
+                currentIndex = 0;
+            }
+        }
+        
+        loadQuestion(currentIndex);
     }
 
     window.handleAnswer = function(btn, qId, choiceIndex) {
@@ -920,6 +1027,7 @@
     // Jump Logic: Click on Progress Text/Icon
     jumpTrigger.addEventListener('click', () => {
         const max = currentList.length;
+        if (max === 0) return;
         // Pre-fill prompt with current question number for convenience
         const p = prompt(`Enter Question Number (1 - ${max}) to jump:`, currentIndex + 1);
         
@@ -956,7 +1064,12 @@
         prevBtn.disabled = currentIndex === 0;
         nextBtn.disabled = (currentIndex === currentList.length - 1) || !isAnswered;
 
-        progressText.innerText = `${currentIndex + 1} / ${currentList.length}`;
+        // Update progress text based on context (Filtered or Main)
+        let label = `${currentIndex + 1} / ${currentList.length}`;
+        if (isBookmarkFilterActive) label = `Saved: ${label}`;
+        else if (currentSearchTerm) label = `Found: ${label}`;
+
+        progressText.innerText = label;
         const pct = ((currentIndex + 1) / currentList.length) * 100;
         progressFill.style.width = `${pct}%`;
     }
@@ -973,27 +1086,7 @@
             searchContainer.classList.remove('active');
         }
         
-        if (term === '') {
-            currentList = [...window.quizData];
-            if (historyState.lastIndex !== undefined && historyState.lastIndex < currentList.length) {
-                currentIndex = historyState.lastIndex;
-            } else {
-                currentIndex = 0;
-            }
-        } else {
-            // Filter logic including options and IDs
-            currentList = window.quizData.filter(q => {
-                const qEn = q.questionEn ? q.questionEn.toLowerCase() : '';
-                const qHi = q.questionHi ? q.questionHi.toLowerCase() : ''; 
-                const qId = q.id ? q.id.toString() : '';
-                const optionsStr = q.options ? q.options.join(' ').toLowerCase() : '';
-
-                return qEn.includes(term) || qHi.includes(term) || qId.includes(term) || optionsStr.includes(term);
-            });
-            currentIndex = 0;
-        }
-        
-        loadQuestion(currentIndex);
+        applyFilters(true); // Reset index on search change
     });
 
     window.clearSearch = function() {
@@ -1034,7 +1127,13 @@
     function saveToStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(historyState)); }
     function loadFromStorage() {
         const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) { try { historyState = JSON.parse(saved); if (!historyState.answers) historyState.answers = {}; } catch (e) {} }
+        if (saved) { 
+            try { 
+                historyState = JSON.parse(saved); 
+                if (!historyState.answers) historyState.answers = {}; 
+                if (!historyState.bookmarks) historyState.bookmarks = []; // Migration for old users
+            } catch (e) {} 
+        }
     }
     window.resetProgress = function() {
         if(confirm("Clear history?")) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
