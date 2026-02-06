@@ -301,8 +301,16 @@
                         <input type="text" id="searchInput" class="search-input" placeholder="Search topics...">
                         <i class="fa-solid fa-xmark search-clear" id="searchClear" onclick="clearSearch()" title="Clear Search"></i>
                     </div>
-                    <!-- Text Size Adjuster & Bookmark Filter -->
+                    <!-- Text Size Adjuster, Bookmark & Mistake Filter -->
                     <div class="text-controls">
+                        <!-- Shuffle Button -->
+                        <button class="shuffle-btn" id="shuffleBtn" onclick="toggleShuffle()" title="Shuffle Questions (Randomize Order)">
+                            <i class="fa-solid fa-shuffle"></i>
+                        </button>
+                        <!-- Mistakes Filter Button -->
+                        <button class="mistake-btn" id="mistakeFilterBtn" onclick="toggleMistakeFilter()" title="Show Mistakes Only (Smart Review)">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </button>
                         <!-- Bookmark Filter Button -->
                         <button class="bookmark-btn" id="bookmarkFilterBtn" onclick="toggleBookmarkFilter()" title="Show Bookmarked Questions">
                             <i class="fa-regular fa-bookmark"></i>
@@ -646,6 +654,8 @@
     let fontLevel = -1; 
     let currentSearchTerm = '';
     let isBookmarkFilterActive = false; // State for bookmark filtering
+    let isMistakesFilterActive = false; // State for mistakes filtering
+    let isShuffleActive = false; // State for shuffle mode
 
     // DOM Elements
     const cardArea = document.getElementById('cardArea');
@@ -659,6 +669,8 @@
     const themeBtn = document.getElementById('themeBtn');
     const jumpTrigger = document.getElementById('jumpTrigger');
     const bookmarkFilterBtn = document.getElementById('bookmarkFilterBtn');
+    const mistakeFilterBtn = document.getElementById('mistakeFilterBtn');
+    const shuffleBtn = document.getElementById('shuffleBtn');
 
     window.onload = () => {
         // Set dynamic year for evergreen footer
@@ -671,10 +683,14 @@
         // Wait 100ms for parts to load
         setTimeout(() => {
             if (window.quizData && window.quizData.length > 0) {
-                // Sort by ID
+                // Ensure data is sorted by ID initially
                 window.quizData.sort((a, b) => a.id - b.id);
                 
                 loadFromStorage();
+                
+                // Initialize shuffle state from storage if exists (optional but good UX)
+                // For now, let's keep shuffle state transient (per session) unless requested otherwise
+                
                 currentList = [...window.quizData];
                 
                 if (historyState.lastIndex && historyState.lastIndex < currentList.length) {
@@ -814,16 +830,23 @@
         if (!currentList || currentList.length === 0) {
             // Differentiate Empty State
             let message = '';
-            if (isBookmarkFilterActive) {
-                message = `<p>No bookmarks found.<br><span style="font-size:0.8em; color:var(--text-sec)">Tap the <i class="fa-regular fa-bookmark"></i> icon on any question to save it here.</span></p>`;
+            let subMsg = '';
+            
+            if (isMistakesFilterActive) {
+                message = `Great job! No mistakes found.`;
+                subMsg = `<span style="font-size:0.8em; color:var(--text-sec)">Any questions you answer incorrectly will appear here for review.</span>`;
+            } else if (isBookmarkFilterActive) {
+                message = `No bookmarks found.`;
+                subMsg = `<span style="font-size:0.8em; color:var(--text-sec)">Tap the <i class="fa-regular fa-bookmark"></i> icon on any question to save it here.</span>`;
             } else {
-                message = `<p>No matches found for "<strong>${currentSearchTerm}</strong>"</p>`;
+                message = `No matches found for "<strong>${currentSearchTerm}</strong>"`;
             }
 
             cardArea.innerHTML = `
                 <div class="empty-state">
                     <i class="fa-solid fa-file-circle-question"></i>
-                    ${message}
+                    <p>${message}</p>
+                    ${subMsg ? `<p>${subMsg}</p>` : ''}
                     ${currentSearchTerm ? '<button onclick="clearSearch()">Clear Search</button>' : ''}
                 </div>`;
             updateControls();
@@ -908,8 +931,9 @@
             ${feedbackHtml}
         `;
 
-        // Only save position if NOT searching and NOT filtering bookmarks to preserve "Main" progress
-        if (searchInput.value === '' && !isBookmarkFilterActive) { 
+        // Only save position if NOT searching and NOT filtering (Mistakes or Bookmarks or Shuffle)
+        // If Shuffle is active, we don't save the index because it's random/meaningless for resumption.
+        if (searchInput.value === '' && !isBookmarkFilterActive && !isMistakesFilterActive && !isShuffleActive) { 
             historyState.lastIndex = currentIndex;
             saveToStorage();
         }
@@ -931,49 +955,95 @@
         }
         
         saveToStorage();
-        
-        // If we are currently viewing the bookmark list and remove one, we should probably stay on the current view 
-        // until the user navigates, or refresh the list. 
-        // Better UX: Refresh the UI for the current card immediately. 
-        // If in filter mode, the card effectively disappears from the 'valid' list, 
-        // but let's just re-render to update the icon state first.
         loadQuestion(currentIndex); 
         
-        // If filter is active, we should re-apply filters to ensure the list count updates correctly on next nav
         if (isBookmarkFilterActive) {
-            applyFilters(false); // Apply but don't reset index immediately to avoid jumping while reading
+            applyFilters(false);
         }
     };
 
     window.toggleBookmarkFilter = function() {
         isBookmarkFilterActive = !isBookmarkFilterActive;
+        // Disable Mistake filter
+        if (isBookmarkFilterActive) {
+            isMistakesFilterActive = false;
+            mistakeFilterBtn.classList.remove('active');
+        }
+
         const btn = document.getElementById('bookmarkFilterBtn');
-        
         if (isBookmarkFilterActive) {
             btn.classList.add('active');
-            btn.innerHTML = '<i class="fa-solid fa-bookmark"></i>'; // Solid icon
-            // Clear search when entering bookmarks for clarity, or keep combined? 
-            // Better to combine for "Search inside bookmarks"
+            btn.innerHTML = '<i class="fa-solid fa-bookmark"></i>'; 
         } else {
             btn.classList.remove('active');
-            btn.innerHTML = '<i class="fa-regular fa-bookmark"></i>'; // Outline icon
+            btn.innerHTML = '<i class="fa-regular fa-bookmark"></i>'; 
+        }
+        applyFilters(true);
+    };
+
+    window.toggleMistakeFilter = function() {
+        isMistakesFilterActive = !isMistakesFilterActive;
+        // Disable Bookmark filter
+        if (isMistakesFilterActive) {
+            isBookmarkFilterActive = false;
+            bookmarkFilterBtn.classList.remove('active');
+            bookmarkFilterBtn.innerHTML = '<i class="fa-regular fa-bookmark"></i>';
+        }
+
+        const btn = document.getElementById('mistakeFilterBtn');
+        if (isMistakesFilterActive) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+        applyFilters(true);
+    }
+
+    // Shuffle Logic
+    window.toggleShuffle = function() {
+        isShuffleActive = !isShuffleActive;
+        
+        if (isShuffleActive) {
+            shuffleBtn.classList.add('active');
+        } else {
+            shuffleBtn.classList.remove('active');
         }
         
-        applyFilters(true); // True = reset index to 0
-    };
+        applyFilters(true); // Re-apply logic (which includes shuffling)
+    }
 
     function applyFilters(resetIndex = false) {
         const term = currentSearchTerm;
         
-        // Base list
-        let filtered = window.quizData;
+        // Start with full data copy
+        let filtered = [...window.quizData];
 
-        // 1. Filter by Bookmarks
+        // 1. Shuffle if active
+        if (isShuffleActive) {
+            // Fisher-Yates Shuffle
+            for (let i = filtered.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
+            }
+        } else {
+            // Ensure default sort if shuffle is off
+            filtered.sort((a, b) => a.id - b.id);
+        }
+
+        // 2. Filter by Bookmarks
         if (isBookmarkFilterActive) {
             filtered = filtered.filter(q => historyState.bookmarks.includes(q.id));
         }
 
-        // 2. Filter by Search Term
+        // 3. Filter by Mistakes
+        if (isMistakesFilterActive) {
+            filtered = filtered.filter(q => {
+                const userAns = historyState.answers[q.id];
+                return userAns !== undefined && userAns !== q.answer;
+            });
+        }
+
+        // 4. Filter by Search Term
         if (term && term !== '') {
              filtered = filtered.filter(q => {
                 const qEn = q.questionEn ? q.questionEn.toLowerCase() : '';
@@ -990,7 +1060,6 @@
         if (resetIndex) {
             currentIndex = 0;
         } else {
-            // If the current question is still in the list, keep index, else go to 0
             if (currentIndex >= currentList.length) {
                 currentIndex = 0;
             }
@@ -1000,7 +1069,6 @@
     }
 
     window.handleAnswer = function(btn, qId, choiceIndex) {
-        // Safety Check
         if (!currentList || !currentList[currentIndex]) return;
         
         const q = currentList[currentIndex];
@@ -1028,8 +1096,12 @@
     jumpTrigger.addEventListener('click', () => {
         const max = currentList.length;
         if (max === 0) return;
-        // Pre-fill prompt with current question number for convenience
-        const p = prompt(`Enter Question Number (1 - ${max}) to jump:`, currentIndex + 1);
+        
+        // If shuffling, explain jump works on current list index, not question ID
+        let msg = `Enter Card Number (1 - ${max}) to jump:`;
+        if (isShuffleActive) msg += `\n(Note: In Shuffle mode, this jumps to the position in the random list, not Question ID)`;
+        
+        const p = prompt(msg, currentIndex + 1);
         
         if (p) {
             const num = parseInt(p);
@@ -1064,10 +1136,16 @@
         prevBtn.disabled = currentIndex === 0;
         nextBtn.disabled = (currentIndex === currentList.length - 1) || !isAnswered;
 
-        // Update progress text based on context (Filtered or Main)
+        // Update progress text based on context
         let label = `${currentIndex + 1} / ${currentList.length}`;
-        if (isBookmarkFilterActive) label = `Saved: ${label}`;
-        else if (currentSearchTerm) label = `Found: ${label}`;
+        let prefix = [];
+        
+        if (isShuffleActive) prefix.push("Random");
+        if (isMistakesFilterActive) prefix.push("Mistakes");
+        else if (isBookmarkFilterActive) prefix.push("Saved");
+        else if (currentSearchTerm) prefix.push("Found");
+        
+        if (prefix.length > 0) label = `${prefix.join(' + ')}: ${label}`;
 
         progressText.innerText = label;
         const pct = ((currentIndex + 1) / currentList.length) * 100;
