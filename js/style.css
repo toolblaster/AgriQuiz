@@ -698,7 +698,7 @@ mark.highlight {
     color: #DDD6FE; /* Violet 200 */
 }
 
-/* NEW: Quick Mode Button */
+/* Quick Mode Button */
 .quick-btn {
     background: transparent;
     border: 1px solid var(--border-color);
@@ -802,17 +802,22 @@ mark.highlight {
     position: relative; /* For bookmark positioning relative context if needed */
 }
 
-/* Individual Bookmark Icon on Question Card */
-.bookmark-icon {
+/* Individual Bookmark/Share Icon on Question Card */
+.q-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.bookmark-icon, .share-icon {
     font-size: 1.1rem;
     color: var(--border-color); /* Default inactive color */
     cursor: pointer;
     transition: color 0.2s, transform 0.2s;
-    margin-left: 10px;
     padding: 5px; /* Increase tap area */
 }
 
-.bookmark-icon:hover {
+.bookmark-icon:hover, .share-icon:hover {
     transform: scale(1.1);
     color: var(--accent);
 }
@@ -821,6 +826,9 @@ mark.highlight {
     color: var(--accent);
     /* No animation on active state itself, just color change */
 }
+
+/* Share specific hover color */
+.share-icon:hover { color: #0284c7; /* Sky 600 */ }
 
 
 .q-text-en { 
