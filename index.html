@@ -255,6 +255,11 @@
                 Our interactive, <strong>bilingual (English & Hindi)</strong> quiz system challenges your brain, boosts retention, and ensures you are exam-ready.
             </p>
             
+            <!-- NEW: Quick Start CTA -->
+            <button class="hero-cta-btn" onclick="toggleQuickMode(true)">
+                <i class="fa-solid fa-bolt"></i> Start Quick 10 Quiz
+            </button>
+            
             <!-- Key Subjects Section (Compact) -->
             <div class="subjects-container">
                 <!-- H2: Major Section Heading -->
@@ -290,7 +295,7 @@
         </section>
 
         <!-- Right Column: Compact Quiz Widget (50%) -->
-        <section class="quiz-widget-wrapper">
+        <section class="quiz-widget-wrapper" id="quizWidgetWrapper">
             <div class="quiz-card">
                 
                 <!-- Widget Header -->
@@ -301,8 +306,12 @@
                         <input type="text" id="searchInput" class="search-input" placeholder="Search topics...">
                         <i class="fa-solid fa-xmark search-clear" id="searchClear" onclick="clearSearch()" title="Clear Search"></i>
                     </div>
-                    <!-- Text Size Adjuster, Bookmark & Mistake Filter -->
+                    <!-- Text Size Adjuster, Bookmark, Mistake, Shuffle & Quick Filter -->
                     <div class="text-controls">
+                        <!-- Quick Mode Button -->
+                        <button class="quick-btn" id="quickModeBtn" onclick="toggleQuickMode()" title="Toggle Quick 10 Mode">
+                            <i class="fa-solid fa-bolt"></i>
+                        </button>
                         <!-- Shuffle Button -->
                         <button class="shuffle-btn" id="shuffleBtn" onclick="toggleShuffle()" title="Shuffle Questions (Randomize Order)">
                             <i class="fa-solid fa-shuffle"></i>
@@ -656,6 +665,11 @@
     let isBookmarkFilterActive = false; // State for bookmark filtering
     let isMistakesFilterActive = false; // State for mistakes filtering
     let isShuffleActive = false; // State for shuffle mode
+    
+    // NEW: Quick Mode Variables
+    let isQuickModeActive = false;
+    let quickSessionScore = 0;
+    const QUICK_LIMIT = 10;
 
     // DOM Elements
     const cardArea = document.getElementById('cardArea');
@@ -671,6 +685,8 @@
     const bookmarkFilterBtn = document.getElementById('bookmarkFilterBtn');
     const mistakeFilterBtn = document.getElementById('mistakeFilterBtn');
     const shuffleBtn = document.getElementById('shuffleBtn');
+    const quickModeBtn = document.getElementById('quickModeBtn');
+    const quizWidgetWrapper = document.getElementById('quizWidgetWrapper');
 
     window.onload = () => {
         // Set dynamic year for evergreen footer
@@ -687,9 +703,6 @@
                 window.quizData.sort((a, b) => a.id - b.id);
                 
                 loadFromStorage();
-                
-                // Initialize shuffle state from storage if exists (optional but good UX)
-                // For now, let's keep shuffle state transient (per session) unless requested otherwise
                 
                 currentList = [...window.quizData];
                 
@@ -756,7 +769,7 @@
                         currentIndex = 0;
                     }
                     
-                    applyFilters(); // Re-apply filters including bookmarks if active
+                    applyFilters(); // Re-apply filters
                     updateStats();
                     alert('Progress restored successfully!');
                 } else {
@@ -780,13 +793,11 @@
     }
 
     function getFontSize() {
-        // Unified size logic for Question and Options
-        const baseSize = 0.9; // Adjusted base size to 0.9rem (approx 14.4px)
-        const step = 0.1; // Adjusted step to 0.1rem
-        // Current Level Logic:
-        // Level -1 (Default): 0.9 + 0 = 0.9rem (~14.4px)
-        // Level 0 (First +): 0.9 + 0.1 = 1.0rem (16px) - User Requested
-        // Level 1: 1.1rem (~17.6px)
+        // Optimized font size for mobile
+        const isMobile = window.innerWidth <= 600;
+        const baseSize = isMobile ? 0.75 : 0.9; // Smaller base on mobile (0.75rem approx 12px)
+        const step = 0.1; 
+        // Logic: fontLevel -1 (default) -> offset 0
         const offset = fontLevel + 1; 
         return `${baseSize + (offset * step)}rem`;
     }
@@ -818,7 +829,6 @@
     // Highlighting Helper
     function highlightText(text, term) {
         if (!term || term.length < 2) return text;
-        // Escape special regex chars
         const safeTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const regex = new RegExp(`(${safeTerm})`, 'gi');
         return text.replace(regex, '<mark class="highlight">$1</mark>');
@@ -827,12 +837,32 @@
     function loadQuestion(index) {
         quizContent.scrollTop = 0;
 
+        // --- Quick Mode Completion Screen ---
+        if (isQuickModeActive && index >= currentList.length) {
+            // Show Summary
+            cardArea.innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-trophy" style="color:var(--accent)"></i>
+                    <p style="font-size:1.1rem; font-weight:700;">Session Complete!</p>
+                    <div class="summary-score">${quickSessionScore} / ${currentList.length}</div>
+                    <p style="margin-bottom:20px; color:var(--text-sec)">Questions mastered in this quick session.</p>
+                    <button class="summary-btn" onclick="continueQuickMode()">Start Next 10 <i class="fa-solid fa-arrow-right"></i></button>
+                    <br><br>
+                    <button style="background:transparent; color:var(--text-sec); font-size:0.8rem;" onclick="toggleQuickMode(false)">Exit Quick Mode</button>
+                </div>
+            `;
+            updateControls(); // Will disable next/prev
+            return;
+        }
+
         if (!currentList || currentList.length === 0) {
-            // Differentiate Empty State
             let message = '';
             let subMsg = '';
             
-            if (isMistakesFilterActive) {
+            if (isQuickModeActive) {
+                message = `All caught up!`;
+                subMsg = `You have answered all available questions. Try reviewing your mistakes.`;
+            } else if (isMistakesFilterActive) {
                 message = `Great job! No mistakes found.`;
                 subMsg = `<span style="font-size:0.8em; color:var(--text-sec)">Any questions you answer incorrectly will appear here for review.</span>`;
             } else if (isBookmarkFilterActive) {
@@ -848,6 +878,7 @@
                     <p>${message}</p>
                     ${subMsg ? `<p>${subMsg}</p>` : ''}
                     ${currentSearchTerm ? '<button onclick="clearSearch()">Clear Search</button>' : ''}
+                    ${isQuickModeActive ? '<br><button onclick="toggleQuickMode(false)">Exit Quick Mode</button>' : ''}
                 </div>`;
             updateControls();
             return;
@@ -855,14 +886,10 @@
 
         const q = currentList[index];
         const savedAnswer = historyState.answers[q.id];
-        // Ensure strictly that it is a number (index) to avoid 'null' or garbage causing locked state
         const isAnswered = (savedAnswer !== undefined && savedAnswer !== null && typeof savedAnswer === 'number');
         const isBookmarked = historyState.bookmarks.includes(q.id);
         
-        // Get unified font size
         const fontSize = getFontSize();
-
-        // Apply highlighting
         const qEnText = highlightText(q.questionEn, currentSearchTerm);
         const qHiText = highlightText(q.questionHi, currentSearchTerm);
 
@@ -870,7 +897,6 @@
             let statusClass = '';
             let iconHtml = '';
             
-            // Apply highlighting to options
             const optText = highlightText(opt, currentSearchTerm);
             
             if (isAnswered) {
@@ -884,8 +910,6 @@
                 }
             }
             
-            // Applied inline style for font-size to ensure option buttons resize with the adjuster
-            // Added safe quotes around ID to prevent JS error on strings
             return `
             <div class="option-btn ${statusClass} ${isAnswered ? 'disabled' : ''}" 
                  style="font-size: ${fontSize};"
@@ -905,14 +929,12 @@
         }
 
         const listClass = isAnswered ? 'options-list answered' : 'options-list';
-        
         const statusDisplay = isAnswered 
             ? (savedAnswer === q.answer 
                 ? '<i class="fa-solid fa-check"></i> Solved' 
                 : '<i class="fa-solid fa-xmark"></i> Review') 
             : 'Pending';
 
-        // Bookmark Icon Class
         const bookmarkIconClass = isBookmarked ? 'fa-solid fa-bookmark active' : 'fa-regular fa-bookmark';
 
         cardArea.innerHTML = `
@@ -931,9 +953,7 @@
             ${feedbackHtml}
         `;
 
-        // Only save position if NOT searching and NOT filtering (Mistakes or Bookmarks or Shuffle)
-        // If Shuffle is active, we don't save the index because it's random/meaningless for resumption.
-        if (searchInput.value === '' && !isBookmarkFilterActive && !isMistakesFilterActive && !isShuffleActive) { 
+        if (searchInput.value === '' && !isBookmarkFilterActive && !isMistakesFilterActive && !isShuffleActive && !isQuickModeActive) { 
             historyState.lastIndex = currentIndex;
             saveToStorage();
         }
@@ -941,109 +961,119 @@
         updateControls();
     }
 
-    // Bookmark Logic
+    // Toggle Functions
     window.toggleBookmark = function(qId) {
         qId = parseInt(qId);
         const idx = historyState.bookmarks.indexOf(qId);
-        
-        if (idx > -1) {
-            // Remove
-            historyState.bookmarks.splice(idx, 1);
-        } else {
-            // Add
-            historyState.bookmarks.push(qId);
-        }
-        
+        if (idx > -1) historyState.bookmarks.splice(idx, 1);
+        else historyState.bookmarks.push(qId);
         saveToStorage();
         loadQuestion(currentIndex); 
-        
-        if (isBookmarkFilterActive) {
-            applyFilters(false);
-        }
+        if (isBookmarkFilterActive) applyFilters(false);
     };
 
     window.toggleBookmarkFilter = function() {
         isBookmarkFilterActive = !isBookmarkFilterActive;
-        // Disable Mistake filter
         if (isBookmarkFilterActive) {
-            isMistakesFilterActive = false;
-            mistakeFilterBtn.classList.remove('active');
-        }
-
-        const btn = document.getElementById('bookmarkFilterBtn');
-        if (isBookmarkFilterActive) {
-            btn.classList.add('active');
-            btn.innerHTML = '<i class="fa-solid fa-bookmark"></i>'; 
+            disableOtherFilters('bookmark');
+            document.getElementById('bookmarkFilterBtn').classList.add('active');
+            document.getElementById('bookmarkFilterBtn').innerHTML = '<i class="fa-solid fa-bookmark"></i>';
         } else {
-            btn.classList.remove('active');
-            btn.innerHTML = '<i class="fa-regular fa-bookmark"></i>'; 
+            document.getElementById('bookmarkFilterBtn').classList.remove('active');
+            document.getElementById('bookmarkFilterBtn').innerHTML = '<i class="fa-regular fa-bookmark"></i>';
         }
         applyFilters(true);
     };
 
     window.toggleMistakeFilter = function() {
         isMistakesFilterActive = !isMistakesFilterActive;
-        // Disable Bookmark filter
         if (isMistakesFilterActive) {
-            isBookmarkFilterActive = false;
-            bookmarkFilterBtn.classList.remove('active');
-            bookmarkFilterBtn.innerHTML = '<i class="fa-regular fa-bookmark"></i>';
-        }
-
-        const btn = document.getElementById('mistakeFilterBtn');
-        if (isMistakesFilterActive) {
-            btn.classList.add('active');
+            disableOtherFilters('mistake');
+            document.getElementById('mistakeFilterBtn').classList.add('active');
         } else {
-            btn.classList.remove('active');
+            document.getElementById('mistakeFilterBtn').classList.remove('active');
         }
         applyFilters(true);
     }
 
-    // Shuffle Logic
     window.toggleShuffle = function() {
         isShuffleActive = !isShuffleActive;
-        
         if (isShuffleActive) {
-            shuffleBtn.classList.add('active');
+            document.getElementById('shuffleBtn').classList.add('active');
         } else {
-            shuffleBtn.classList.remove('active');
+            document.getElementById('shuffleBtn').classList.remove('active');
         }
-        
-        applyFilters(true); // Re-apply logic (which includes shuffling)
+        applyFilters(true);
+    }
+
+    // NEW: Quick Mode Logic
+    window.toggleQuickMode = function(forceOn = null) {
+        if (forceOn !== null) isQuickModeActive = forceOn;
+        else isQuickModeActive = !isQuickModeActive;
+
+        if (isQuickModeActive) {
+            // Scroll to widget if coming from hero
+            quizWidgetWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            disableOtherFilters('quick');
+            document.getElementById('quickModeBtn').classList.add('active');
+            // Reset score for new session
+            quickSessionScore = 0;
+        } else {
+            document.getElementById('quickModeBtn').classList.remove('active');
+        }
+        applyFilters(true);
+    };
+
+    window.continueQuickMode = function() {
+        // Just re-run filter logic, it will pick up next 10 because previous 10 are now answered
+        // Reset score for next batch
+        quickSessionScore = 0;
+        applyFilters(true);
+    }
+
+    function disableOtherFilters(active) {
+        if (active !== 'bookmark') {
+            isBookmarkFilterActive = false;
+            document.getElementById('bookmarkFilterBtn').classList.remove('active');
+            document.getElementById('bookmarkFilterBtn').innerHTML = '<i class="fa-regular fa-bookmark"></i>';
+        }
+        if (active !== 'mistake') {
+            isMistakesFilterActive = false;
+            document.getElementById('mistakeFilterBtn').classList.remove('active');
+        }
+        if (active !== 'quick') {
+            isQuickModeActive = false;
+            document.getElementById('quickModeBtn').classList.remove('active');
+        }
     }
 
     function applyFilters(resetIndex = false) {
         const term = currentSearchTerm;
-        
-        // Start with full data copy
         let filtered = [...window.quizData];
 
-        // 1. Shuffle if active
+        // 1. Shuffle
         if (isShuffleActive) {
-            // Fisher-Yates Shuffle
+            // Seeded shuffle? No, random for now.
             for (let i = filtered.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [filtered[i], filtered[j]] = [filtered[j], filtered[i]];
             }
         } else {
-            // Ensure default sort if shuffle is off
             filtered.sort((a, b) => a.id - b.id);
         }
 
-        // 2. Filter by Bookmarks
+        // 2. Pre-filters
         if (isBookmarkFilterActive) {
             filtered = filtered.filter(q => historyState.bookmarks.includes(q.id));
-        }
-
-        // 3. Filter by Mistakes
-        if (isMistakesFilterActive) {
+        } else if (isMistakesFilterActive) {
             filtered = filtered.filter(q => {
                 const userAns = historyState.answers[q.id];
                 return userAns !== undefined && userAns !== q.answer;
             });
         }
 
-        // 4. Filter by Search Term
+        // 3. Search
         if (term && term !== '') {
              filtered = filtered.filter(q => {
                 const qEn = q.questionEn ? q.questionEn.toLowerCase() : '';
@@ -1054,14 +1084,24 @@
             });
         }
 
+        // 4. Quick Mode (MUST BE LAST to slice results)
+        if (isQuickModeActive) {
+            // Filter to only Unanswered questions
+            filtered = filtered.filter(q => historyState.answers[q.id] === undefined);
+            // Slice the first 10
+            filtered = filtered.slice(0, QUICK_LIMIT);
+        }
+
         currentList = filtered;
         
-        // Handle Index
         if (resetIndex) {
             currentIndex = 0;
         } else {
             if (currentIndex >= currentList.length) {
-                currentIndex = 0;
+                // If filtered list shrank and index is out of bounds, go to last valid
+                currentIndex = Math.max(0, currentList.length - 1);
+                // Or simply 0 to be safe
+                if (currentIndex < 0) currentIndex = 0; 
             }
         }
         
@@ -1072,6 +1112,12 @@
         if (!currentList || !currentList[currentIndex]) return;
         
         const q = currentList[currentIndex];
+        
+        // Track score for Quick Mode (only on first attempt)
+        if (isQuickModeActive && historyState.answers[qId] === undefined) {
+            if (choiceIndex === q.answer) quickSessionScore++;
+        }
+
         historyState.answers[qId] = choiceIndex;
         saveToStorage();
         updateStats(); 
@@ -1079,7 +1125,11 @@
     };
 
     nextBtn.addEventListener('click', () => {
-        if (currentIndex < currentList.length - 1) {
+        // In Quick Mode, allow going past the last question to show summary
+        if (isQuickModeActive && currentIndex === currentList.length - 1) {
+            currentIndex++;
+            loadQuestion(currentIndex);
+        } else if (currentIndex < currentList.length - 1) {
             currentIndex++;
             loadQuestion(currentIndex);
         }
@@ -1092,24 +1142,18 @@
         }
     });
 
-    // Jump Logic: Click on Progress Text/Icon
     jumpTrigger.addEventListener('click', () => {
+        if (isQuickModeActive) return; // Disable manual jump in quick mode for focus
         const max = currentList.length;
         if (max === 0) return;
-        
-        // If shuffling, explain jump works on current list index, not question ID
         let msg = `Enter Card Number (1 - ${max}) to jump:`;
         if (isShuffleActive) msg += `\n(Note: In Shuffle mode, this jumps to the position in the random list, not Question ID)`;
-        
         const p = prompt(msg, currentIndex + 1);
-        
         if (p) {
             const num = parseInt(p);
             if (!isNaN(num) && num >= 1 && num <= max) {
                 currentIndex = num - 1;
                 loadQuestion(currentIndex);
-            } else {
-                if(p.trim() !== "") alert(`Please enter a valid number between 1 and ${max}.`);
             }
         }
     });
@@ -1122,6 +1166,15 @@
     });
 
     function updateControls() {
+        // Special case for Quick Mode Summary Screen
+        if (isQuickModeActive && currentIndex >= currentList.length) {
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            progressText.innerText = "Done";
+            progressFill.style.width = "100%";
+            return;
+        }
+
         if (!currentList || currentList.length === 0) {
             prevBtn.disabled = true;
             nextBtn.disabled = true;
@@ -1134,13 +1187,15 @@
         const isAnswered = historyState.answers[currentQ.id] !== undefined;
 
         prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = (currentIndex === currentList.length - 1) || !isAnswered;
+        nextBtn.disabled = (currentIndex === currentList.length - 1 && !isQuickModeActive) || (!isAnswered); 
+        // In Quick Mode, Next is enabled on last question if answered, to go to summary
 
-        // Update progress text based on context
         let label = `${currentIndex + 1} / ${currentList.length}`;
         let prefix = [];
         
-        if (isShuffleActive) prefix.push("Random");
+        if (isQuickModeActive) prefix.push("Quick 10");
+        else if (isShuffleActive) prefix.push("Random");
+        
         if (isMistakesFilterActive) prefix.push("Mistakes");
         else if (isBookmarkFilterActive) prefix.push("Saved");
         else if (currentSearchTerm) prefix.push("Found");
@@ -1156,20 +1211,15 @@
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase().trim();
         currentSearchTerm = term;
-        
         // Toggle Clear Button
-        if (term.length > 0) {
-            searchContainer.classList.add('active');
-        } else {
-            searchContainer.classList.remove('active');
-        }
-        
-        applyFilters(true); // Reset index on search change
+        if (term.length > 0) searchContainer.classList.add('active');
+        else searchContainer.classList.remove('active');
+        applyFilters(true);
     });
 
     window.clearSearch = function() {
         searchInput.value = '';
-        searchInput.dispatchEvent(new Event('input')); // Trigger input event to reset
+        searchInput.dispatchEvent(new Event('input')); 
         searchInput.focus();
     };
     
@@ -1178,27 +1228,14 @@
         const canonical = document.querySelector('link[rel="canonical"]')?.href || window.location.href;
         const btn = document.querySelector('.footer-share-btn');
         const originalHtml = btn.innerHTML;
-
         if (navigator.share) {
-            try {
-                await navigator.share({
-                    // Only sharing URL as requested
-                    url: canonical
-                });
-            } catch (err) {
-                console.log('Share canceled');
-            }
+            try { await navigator.share({ url: canonical }); } catch (err) {}
         } else {
-            // Fallback for desktop/unsupported browsers
             try {
                 await navigator.clipboard.writeText(canonical);
                 btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-                setTimeout(() => {
-                    btn.innerHTML = originalHtml;
-                }, 2000);
-            } catch (err) {
-                alert('Could not copy URL');
-            }
+                setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
+            } catch (err) {}
         }
     };
 
@@ -1209,7 +1246,7 @@
             try { 
                 historyState = JSON.parse(saved); 
                 if (!historyState.answers) historyState.answers = {}; 
-                if (!historyState.bookmarks) historyState.bookmarks = []; // Migration for old users
+                if (!historyState.bookmarks) historyState.bookmarks = []; 
             } catch (e) {} 
         }
     }
