@@ -706,9 +706,28 @@
                 
                 currentList = [...window.quizData];
                 
-                if (historyState.lastIndex && historyState.lastIndex < currentList.length) {
-                    currentIndex = historyState.lastIndex;
+                // DEEP LINK LOGIC: Check URL for ?id=XX
+                const urlParams = new URLSearchParams(window.location.search);
+                const sharedId = urlParams.get('id');
+                
+                if (sharedId) {
+                    const qId = parseInt(sharedId);
+                    const targetIndex = currentList.findIndex(q => q.id === qId);
+                    
+                    if (targetIndex !== -1) {
+                        currentIndex = targetIndex;
+                        // Scroll to widget to show shared content immediately
+                        setTimeout(() => {
+                            if(quizWidgetWrapper) quizWidgetWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 500);
+                    }
+                } else {
+                    // Normal resumption
+                    if (historyState.lastIndex && historyState.lastIndex < currentList.length) {
+                        currentIndex = historyState.lastIndex;
+                    }
                 }
+                
                 loadQuestion(currentIndex);
                 updateStats(); // Init stats
             } else {
@@ -940,8 +959,9 @@
         cardArea.innerHTML = `
             <div class="q-meta">
                 <span>Q. ${q.id}</span>
-                <span style="display:flex; align-items:center;">
+                <span class="q-actions">
                     <span style="color:var(--primary)">${statusDisplay}</span>
+                    <i class="fa-solid fa-share-from-square share-icon" onclick="shareQuestion('${q.id}')" title="Share Question"></i>
                     <i class="${bookmarkIconClass} bookmark-icon" onclick="toggleBookmark('${q.id}')" title="Bookmark Question"></i>
                 </span>
             </div>
@@ -1107,6 +1127,40 @@
         
         loadQuestion(currentIndex);
     }
+
+    // Share Question Logic
+    window.shareQuestion = async function(qId) {
+        const q = window.quizData.find(item => item.id == qId);
+        if(!q) return;
+        
+        // Base URL
+        const baseUrl = window.location.origin + window.location.pathname;
+        const deepLink = `${baseUrl}?id=${qId}`;
+        
+        // Construct message
+        const shareText = `Can you solve this AgriQuiz question? 🤔\n\nQ: ${q.questionEn}\n\n👉 Attempt here: ${deepLink}`;
+        
+        // Try Web Share API first (Mobile)
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'AgriQuiz Challenge',
+                    text: shareText,
+                    url: deepLink
+                });
+            } catch (err) {
+                // If canceled, fallback to clipboard
+            }
+        } else {
+            // Fallback for Desktop: Copy to Clipboard
+            try {
+                await navigator.clipboard.writeText(shareText);
+                alert('Challenge link copied to clipboard!');
+            } catch (err) {
+                alert('Could not copy link.');
+            }
+        }
+    };
 
     window.handleAnswer = function(btn, qId, choiceIndex) {
         if (!currentList || !currentList[currentIndex]) return;
