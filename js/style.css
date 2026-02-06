@@ -537,6 +537,7 @@ mark.highlight {
 .text-controls {
     display: flex;
     gap: 4px;
+    align-items: center;
 }
 .text-btn {
     background: transparent;
@@ -553,6 +554,39 @@ mark.highlight {
     font-weight: bold;
 }
 .text-btn:hover { background: var(--border-color); color: var(--text-main); }
+
+/* Bookmark Filter Button */
+.bookmark-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-sec);
+    width: 28px; 
+    height: 28px;
+    border-radius: 6px;
+    font-size: 0.9rem; /* Slightly larger icon */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.bookmark-btn:hover { 
+    background: var(--border-color); 
+    color: var(--accent); /* Amber for bookmark interaction */
+}
+
+.bookmark-btn.active {
+    background: #FEF3C7; /* Light Amber */
+    border-color: #F59E0B; /* Amber 500 */
+    color: #B45309; /* Amber 700 */
+}
+[data-theme="dark"] .bookmark-btn.active {
+    background: #78350F;
+    border-color: #F59E0B;
+    color: #FCD34D;
+}
+
 
 /* Stats Dashboard - Modern Compact Strip */
 .stats-dashboard {
@@ -623,7 +657,29 @@ mark.highlight {
     color: var(--text-sec);
     font-weight: 700;
     text-transform: uppercase;
+    position: relative; /* For bookmark positioning relative context if needed */
 }
+
+/* Individual Bookmark Icon on Question Card */
+.bookmark-icon {
+    font-size: 1.1rem;
+    color: var(--border-color); /* Default inactive color */
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+    margin-left: 10px;
+    padding: 5px; /* Increase tap area */
+}
+
+.bookmark-icon:hover {
+    transform: scale(1.1);
+    color: var(--accent);
+}
+
+.bookmark-icon.active {
+    color: var(--accent);
+    /* No animation on active state itself, just color change */
+}
+
 
 .q-text-en { 
     font-weight: 700; 
