@@ -4,7 +4,7 @@
         id: 201, 
         questionEn: "A single cropping system is also known as?", 
         questionHi: "एकल फसल प्रणाली (Single cropping system) को और किस नाम से जाना जाता है?", 
-        options: ["Mixed cropping / मिश्रित खेती", "Intercropping / अंतरफसली खेती", "Monocropping / मोनोक्रॉपिंग", "Relay cropping / रिले क्रॉपिंग"], 
+        options: ["Mixed cropping / मिश्रित खेती", "Relay cropping / रिले क्रॉपिंग", "Monocropping / मोनोक्रॉपिंग", "Intercropping / अंतरफसली खेती"], 
         answer: 2, 
         subject: "Agronomy"
     },
@@ -12,16 +12,16 @@
         id: 202, 
         questionEn: "A soil having pH less than 7.0 is called?", 
         questionHi: "7.0 से कम pH वाली मिट्टी को क्या कहा जाता है?", 
-        options: ["Alkaline soil / क्षारीय मिट्टी", "Saline soil / लवणीय मिट्टी", "Neutral soil / उदासीन मिट्टी", "Acidic soil / अम्लीय मिट्टी"], 
-        answer: 3, 
+        options: ["Alkaline soil / क्षारीय मिट्टी", "Acidic soil / अम्लीय मिट्टी", "Saline soil / लवणीय मिट्टी", "Neutral soil / उदासीन मिट्टी"], 
+        answer: 1, 
         subject: "Soil Science"
     },
     { 
         id: 203, 
         questionEn: "A soil having pH more than 7.0 is called?", 
         questionHi: "7.0 से अधिक pH वाली मिट्टी को क्या कहा जाता है?", 
-        options: ["Alkaline soil / क्षारीय मिट्टी", "Acidic soil / अम्लीय मिट्टी", "Sodic soil / सोडिस्क मिट्टी", "Saline soil / लवणीय मिट्टी"], 
-        answer: 0, 
+        options: ["Acidic soil / अम्लीय मिट्टी", "Saline soil / लवणीय मिट्टी", "Alkaline soil / क्षारीय मिट्टी", "Sodic soil / सोडिस्क मिट्टी"], 
+        answer: 2, 
         subject: "Soil Science"
     },
     { 
@@ -36,32 +36,32 @@
         id: 205, 
         questionEn: "Which soil is most extensive in India?", 
         questionHi: "भारत में कौन सी मिट्टी सबसे अधिक विस्तृत (extensive) है?", 
-        options: ["Black soil / काली मिट्टी", "Red soil / लाल मिट्टी", "Laterite soil / लैटेराइट मिट्टी", "Alluvial soil / जलोढ़ मिट्टी"], 
-        answer: 3, 
+        options: ["Alluvial soil / जलोढ़ मिट्टी", "Black soil / काली मिट्टी", "Red soil / लाल मिट्टी", "Laterite soil / लैटेराइट मिट्टी"], 
+        answer: 0, 
         subject: "Soil Science"
     },
     { 
         id: 206, 
         questionEn: "A solution used to treat seeds to break dormancy is?", 
         questionHi: "बीजों की सुप्त अवस्था (dormancy) को तोड़ने के लिए किस घोल का उपयोग किया जाता है?", 
-        options: ["KNO3 (Potassium Nitrate) / पोटेशियम नाइट्रेट", "NaCl / सोडियम क्लोराइड", "HCl / हाइड्रोक्लोरिक एसिड", "H2SO4 / सल्फ्यूरिक एसिड"], 
-        answer: 0, 
+        options: ["NaCl / सोडियम क्लोराइड", "KNO3 (Potassium Nitrate) / पोटेशियम नाइट्रेट", "HCl / हाइड्रोक्लोरिक एसिड", "H2SO4 / सल्फ्यूरिक एसिड"], 
+        answer: 1, 
         subject: "Seed Technology"
     },
     { 
         id: 207, 
         questionEn: "A sow which has given birth to piglets is called?", 
         questionHi: "एक सुअर जिसने पिगलेट्स को जन्म दिया है, उसे क्या कहा जाता है?", 
-        options: ["Dam / डैम", "Gilt / गिल्ट", "Sow / सो", "Ewe / ईव"], 
-        answer: 2, 
+        options: ["Dam / डैम", "Gilt / गिल्ट", "Ewe / ईव", "Sow / सो"], 
+        answer: 3, 
         subject: "Animal Husbandry"
     },
     { 
         id: 208, 
         questionEn: "A special type of prune used in grapes is?", 
         questionHi: "अंगूर में प्रयुक्त एक विशेष प्रकार की छंटाई (prune) क्या है?", 
-        options: ["Foundation pruning / फाउंडेशन प्रूनिंग", "Back pruning / बैक प्रूनिंग", "Heading back / हेडिंग बैक", "Thinning / थिनिंग"], 
-        answer: 0, 
+        options: ["Heading back / हेडिंग बैक", "Back pruning / बैक प्रूनिंग", "Foundation pruning / फाउंडेशन प्रूनिंग", "Thinning / थिनिंग"], 
+        answer: 2, 
         subject: "Horticulture"
     },
     { 
@@ -76,8 +76,8 @@
         id: 210, 
         questionEn: "A structure used for storing grains in bulk is called?", 
         questionHi: "अनाज को थोक में जमा करने के लिए उपयोग की जाने वाली संरचना को क्या कहा जाता है?", 
-        options: ["Barn / खलिहान", "Granary / अन्नागार", "Warehouse / गोदाम", "Silo / साइलो"], 
-        answer: 3, 
+        options: ["Barn / खलिहान", "Granary / अन्नागार", "Silo / साइलो", "Warehouse / गोदाम"], 
+        answer: 2, 
         subject: "Agricultural Engineering"
     },
     { 
@@ -92,16 +92,16 @@
         id: 212, 
         questionEn: "A substance that kills weeds is called?", 
         questionHi: "खरपतवार (weeds) को मारने वाले पदार्थ को क्या कहा जाता है?", 
-        options: ["Insecticide / कीटनाशक", "Fungicide / कवकनाशी", "Rodenticide / कृंतकनाशी", "Herbicide / शाकनाशी"], 
-        answer: 3, 
+        options: ["Herbicide / शाकनाशी", "Insecticide / कीटनाशक", "Fungicide / कवकनाशी", "Rodenticide / कृंतकनाशी"], 
+        answer: 0, 
         subject: "Agronomy"
     },
     { 
         id: 213, 
         questionEn: "A system of planting where 15% more plants can be accommodated than square system?", 
         questionHi: "रोपण की वह प्रणाली जहां वर्गाकार प्रणाली की तुलना में 15% अधिक पौधे लगाए जा सकते हैं?", 
-        options: ["Rectangular system / आयताकार प्रणाली", "Quincunx system / क्विनकन्क्स प्रणाली", "Hexagonal system / षट्कोणीय प्रणाली", "Contour system / कंटूर प्रणाली"], 
-        answer: 2, 
+        options: ["Rectangular system / आयताकार प्रणाली", "Hexagonal system / षट्कोणीय प्रणाली", "Quincunx system / क्विनकन्क्स प्रणाली", "Contour system / कंटूर प्रणाली"], 
+        answer: 1, 
         subject: "Horticulture"
     },
     { 
@@ -116,8 +116,8 @@
         id: 215, 
         questionEn: "A term used for the first milk produced by a cow after calving?", 
         questionHi: "ब्याने के बाद गाय द्वारा उत्पादित पहले दूध के लिए किस शब्द का प्रयोग किया जाता है?", 
-        options: ["Colostrum / खीस (Colostrum)", "Milk / दूध", "Curd / दही", "Whey / मठा"], 
-        answer: 0, 
+        options: ["Milk / दूध", "Colostrum / खीस (Colostrum)", "Curd / दही", "Whey / मठा"], 
+        answer: 1, 
         subject: "Animal Husbandry"
     },
     { 
@@ -140,16 +140,16 @@
         id: 218, 
         questionEn: "A tool used to measure relative humidity is?", 
         questionHi: "सापेक्ष आर्द्रता (relative humidity) मापने के लिए किस यंत्र का उपयोग किया जाता है?", 
-        options: ["Barometer / बैरोमीटर", "Anemometer / एनीमोमीटर", "Rain gauge / वर्षा मापी", "Hygrometer / हाइग्रोमीटर (Psychrometer)"], 
-        answer: 3, 
+        options: ["Hygrometer / हाइग्रोमीटर (Psychrometer)", "Barometer / बैरोमीटर", "Anemometer / एनीमोमीटर", "Rain gauge / वर्षा मापी"], 
+        answer: 0, 
         subject: "Meteorology"
     },
     { 
         id: 219, 
         questionEn: "A type of germination where cotyledons come above the soil surface?", 
         questionHi: "अंकुरण का एक प्रकार जहाँ बीजपत्र (cotyledons) मिट्टी की सतह से ऊपर आते हैं?", 
-        options: ["Hypogeal / अधोभूमिक (Hypogeal)", "Vivipary / विविपेरी", "Epigeal / उपरिभूमिक (Epigeal)", "Ovipary / ओविपेरी"], 
-        answer: 2, 
+        options: ["Hypogeal / अधोभूमिक (Hypogeal)", "Epigeal / उपरिभूमिक (Epigeal)", "Vivipary / विविपेरी", "Ovipary / ओविपेरी"], 
+        answer: 1, 
         subject: "Botany"
     },
     { 
@@ -189,15 +189,15 @@
         questionEn: "Agricultural Census is conducted every?", 
         questionHi: "कृषि जनगणना (Agricultural Census) कितने वर्षों में आयोजित की जाती है?", 
         options: ["10 Years / 10 वर्ष", "5 Years / 5 वर्ष", "2 Years / 2 वर्ष", "1 Year / 1 वर्ष"], 
-        answer: 0, 
+        answer: 1, 
         subject: "Economics"
     },
     { 
         id: 225, 
         questionEn: "Livestock Census is conducted every?", 
         questionHi: "पशुधन जनगणना (Livestock Census) कितने वर्षों में आयोजित की जाती है?", 
-        options: ["10 Years / 10 वर्ष", "7 Years / 7 वर्ष", "5 Years / 5 वर्ष", "3 Years / 3 वर्ष"], 
-        answer: 2, 
+        options: ["10 Years / 10 वर्ष", "5 Years / 5 वर्ष", "7 Years / 7 वर्ष", "3 Years / 3 वर्ष"], 
+        answer: 1, 
         subject: "Animal Husbandry"
     },
     { 
@@ -212,16 +212,16 @@
         id: 227, 
         questionEn: "Agronomy is derived from which language words?", 
         questionHi: "Agronomy (सस्य विज्ञान) किस भाषा के शब्दों से बना है?", 
-        options: ["Latin / लैटिन", "French / फ्रेंच", "Sanskrit / संस्कृत", "Greek / ग्रीक"], 
-        answer: 3, 
+        options: ["Latin / लैटिन", "French / फ्रेंच", "Greek / ग्रीक", "Sanskrit / संस्कृत"], 
+        answer: 2, 
         subject: "Agronomy"
     },
     { 
         id: 228, 
         questionEn: "Horticulture is derived from which language words?", 
         questionHi: "Horticulture (बागवानी) किस भाषा के शब्दों से बना है?", 
-        options: ["Greek / ग्रीक", "Latin / लैटिन", "English / अंग्रेजी", "Spanish / स्पेनिश"], 
-        answer: 1, 
+        options: ["Latin / लैटिन", "Greek / ग्रीक", "English / अंग्रेजी", "Spanish / स्पेनिश"], 
+        answer: 0, 
         subject: "Horticulture"
     },
     { 
@@ -269,7 +269,7 @@
         questionEn: "Amrapali is a cross between?", 
         questionHi: "आम्रपाली (Amrapali) किसके बीच का संकर है?", 
         options: ["Neelum x Dashehari / नीलम x दशहरी", "Dashehari x Neelum / दशहरी x नीलम", "Ratna x Alphonso / रत्ना x अल्लफांसो", "Neelum x Alphonso / नीलम x अल्लफांसो"], 
-        answer: 2, 
+        answer: 1, 
         subject: "Horticulture"
     },
     { 
@@ -372,8 +372,8 @@
         id: 247, 
         questionEn: "Apple bowl of India is?", 
         questionHi: "भारत का सेब का कटोरा (Apple bowl) किसे कहा जाता है?", 
-        options: ["Jammu & Kashmir / जम्मू और कश्मीर", "Uttarakhand / उत्तराखंड", "Arunachal Pradesh / अरुणाचल प्रदेश", "Himachal Pradesh / हिमाचल प्रदेश"], 
-        answer: 3, 
+        options: ["Jammu & Kashmir / जम्मू और कश्मीर", "Uttarakhand / उत्तराखंड", "Himachal Pradesh / हिमाचल प्रदेश", "Arunachal Pradesh / अरुणाचल प्रदेश"], 
+        answer: 2, 
         subject: "Horticulture"
     },
     { 
