@@ -1,68 +1,67 @@
 (function() {
-    // Options have been shuffled so the answer is not always "A" (0)
     const data = [
     { 
         id: 201, 
         questionEn: "A single cropping system is also known as?", 
         questionHi: "एकल फसल प्रणाली (Single cropping system) को और किस नाम से जाना जाता है?", 
-        options: ["Mixed cropping / मिश्रित खेती", "Monocropping / मोनोक्रॉपिंग", "Intercropping / अंतरफसली खेती", "Relay cropping / रिले क्रॉपिंग"], 
-        answer: 1, 
+        options: ["Mixed cropping / मिश्रित खेती", "Intercropping / अंतरफसली खेती", "Monocropping / मोनोक्रॉपिंग", "Relay cropping / रिले क्रॉपिंग"], 
+        answer: 2, 
         subject: "Agronomy"
     },
     { 
         id: 202, 
         questionEn: "A soil having pH less than 7.0 is called?", 
         questionHi: "7.0 से कम pH वाली मिट्टी को क्या कहा जाता है?", 
-        options: ["Alkaline soil / क्षारीय मिट्टी", "Saline soil / लवणीय मिट्टी", "Acidic soil / अम्लीय मिट्टी", "Neutral soil / उदासीन मिट्टी"], 
-        answer: 2, 
+        options: ["Alkaline soil / क्षारीय मिट्टी", "Saline soil / लवणीय मिट्टी", "Neutral soil / उदासीन मिट्टी", "Acidic soil / अम्लीय मिट्टी"], 
+        answer: 3, 
         subject: "Soil Science"
     },
     { 
         id: 203, 
         questionEn: "A soil having pH more than 7.0 is called?", 
         questionHi: "7.0 से अधिक pH वाली मिट्टी को क्या कहा जाता है?", 
-        options: ["Acidic soil / अम्लीय मिट्टी", "Saline soil / लवणीय मिट्टी", "Sodic soil / सोडिस्क मिट्टी", "Alkaline soil / क्षारीय मिट्टी"], 
-        answer: 3, 
+        options: ["Alkaline soil / क्षारीय मिट्टी", "Acidic soil / अम्लीय मिट्टी", "Sodic soil / सोडिस्क मिट्टी", "Saline soil / लवणीय मिट्टी"], 
+        answer: 0, 
         subject: "Soil Science"
     },
     { 
         id: 204, 
         questionEn: "Which soil is best suited for Cotton cultivation?", 
         questionHi: "कपास की खेती के लिए कौन सी मिट्टी सबसे उपयुक्त है?", 
-        options: ["Black soil / काली मिट्टी", "Red soil / लाल मिट्टी", "Alluvial soil / जलोढ़ मिट्टी", "Laterite soil / लैटेराइट मिट्टी"], 
-        answer: 0, 
+        options: ["Red soil / लाल मिट्टी", "Black soil / काली मिट्टी", "Alluvial soil / जलोढ़ मिट्टी", "Laterite soil / लैटेराइट मिट्टी"], 
+        answer: 1, 
         subject: "Soil Science"
     },
     { 
         id: 205, 
         questionEn: "Which soil is most extensive in India?", 
         questionHi: "भारत में कौन सी मिट्टी सबसे अधिक विस्तृत (extensive) है?", 
-        options: ["Black soil / काली मिट्टी", "Alluvial soil / जलोढ़ मिट्टी", "Red soil / लाल मिट्टी", "Laterite soil / लैटेराइट मिट्टी"], 
-        answer: 1, 
+        options: ["Black soil / काली मिट्टी", "Red soil / लाल मिट्टी", "Laterite soil / लैटेराइट मिट्टी", "Alluvial soil / जलोढ़ मिट्टी"], 
+        answer: 3, 
         subject: "Soil Science"
     },
     { 
         id: 206, 
         questionEn: "A solution used to treat seeds to break dormancy is?", 
         questionHi: "बीजों की सुप्त अवस्था (dormancy) को तोड़ने के लिए किस घोल का उपयोग किया जाता है?", 
-        options: ["NaCl / सोडियम क्लोराइड", "HCl / हाइड्रोक्लोरिक एसिड", "KNO3 (Potassium Nitrate) / पोटेशियम नाइट्रेट", "H2SO4 / सल्फ्यूरिक एसिड"], 
-        answer: 2, 
+        options: ["KNO3 (Potassium Nitrate) / पोटेशियम नाइट्रेट", "NaCl / सोडियम क्लोराइड", "HCl / हाइड्रोक्लोरिक एसिड", "H2SO4 / सल्फ्यूरिक एसिड"], 
+        answer: 0, 
         subject: "Seed Technology"
     },
     { 
         id: 207, 
         questionEn: "A sow which has given birth to piglets is called?", 
         questionHi: "एक सुअर जिसने पिगलेट्स को जन्म दिया है, उसे क्या कहा जाता है?", 
-        options: ["Dam / डैम", "Gilt / गिल्ट", "Ewe / ईव", "Sow / सो"], 
-        answer: 3, 
+        options: ["Dam / डैम", "Gilt / गिल्ट", "Sow / सो", "Ewe / ईव"], 
+        answer: 2, 
         subject: "Animal Husbandry"
     },
     { 
         id: 208, 
         questionEn: "A special type of prune used in grapes is?", 
         questionHi: "अंगूर में प्रयुक्त एक विशेष प्रकार की छंटाई (prune) क्या है?", 
-        options: ["Back pruning / बैक प्रूनिंग", "Foundation pruning / फाउंडेशन प्रूनिंग", "Heading back / हेडिंग बैक", "Thinning / थिनिंग"], 
-        answer: 1, 
+        options: ["Foundation pruning / फाउंडेशन प्रूनिंग", "Back pruning / बैक प्रूनिंग", "Heading back / हेडिंग बैक", "Thinning / थिनिंग"], 
+        answer: 0, 
         subject: "Horticulture"
     },
     { 
@@ -77,56 +76,56 @@
         id: 210, 
         questionEn: "A structure used for storing grains in bulk is called?", 
         questionHi: "अनाज को थोक में जमा करने के लिए उपयोग की जाने वाली संरचना को क्या कहा जाता है?", 
-        options: ["Barn / खलिहान", "Granary / अन्नागार", "Silo / साइलो", "Warehouse / गोदाम"], 
-        answer: 2, 
+        options: ["Barn / खलिहान", "Granary / अन्नागार", "Warehouse / गोदाम", "Silo / साइलो"], 
+        answer: 3, 
         subject: "Agricultural Engineering"
     },
     { 
         id: 211, 
         questionEn: "A substance that kills fungi is called?", 
         questionHi: "कवक (fungi) को मारने वाले पदार्थ को क्या कहा जाता है?", 
-        options: ["Insecticide / कीटनाशक", "Herbicide / शाकनाशी", "Nematicide / सूत्रकृमिनाशी", "Fungicide / कवकनाशी"], 
-        answer: 3, 
+        options: ["Insecticide / कीटनाशक", "Fungicide / कवकनाशी", "Herbicide / शाकनाशी", "Nematicide / सूत्रकृमिनाशी"], 
+        answer: 1, 
         subject: "Plant Pathology"
     },
     { 
         id: 212, 
         questionEn: "A substance that kills weeds is called?", 
         questionHi: "खरपतवार (weeds) को मारने वाले पदार्थ को क्या कहा जाता है?", 
-        options: ["Herbicide / शाकनाशी", "Insecticide / कीटनाशक", "Fungicide / कवकनाशी", "Rodenticide / कृंतकनाशी"], 
-        answer: 0, 
+        options: ["Insecticide / कीटनाशक", "Fungicide / कवकनाशी", "Rodenticide / कृंतकनाशी", "Herbicide / शाकनाशी"], 
+        answer: 3, 
         subject: "Agronomy"
     },
     { 
         id: 213, 
         questionEn: "A system of planting where 15% more plants can be accommodated than square system?", 
         questionHi: "रोपण की वह प्रणाली जहां वर्गाकार प्रणाली की तुलना में 15% अधिक पौधे लगाए जा सकते हैं?", 
-        options: ["Rectangular system / आयताकार प्रणाली", "Hexagonal system / षट्कोणीय प्रणाली", "Quincunx system / क्विनकन्क्स प्रणाली", "Contour system / कंटूर प्रणाली"], 
-        answer: 1, 
+        options: ["Rectangular system / आयताकार प्रणाली", "Quincunx system / क्विनकन्क्स प्रणाली", "Hexagonal system / षट्कोणीय प्रणाली", "Contour system / कंटूर प्रणाली"], 
+        answer: 2, 
         subject: "Horticulture"
     },
     { 
         id: 214, 
         questionEn: "A technique used to produce virus-free plants is?", 
         questionHi: "वायरस मुक्त पौधे तैयार करने के लिए किस तकनीक का उपयोग किया जाता है?", 
-        options: ["Anther culture / परागकोष संवर्धन", "Embryo culture / भ्रूण संवर्धन", "Meristem culture / विभज्योतक संवर्धन", "Protoplast culture / प्रोटोप्लास्ट संवर्धन"], 
-        answer: 2, 
+        options: ["Anther culture / परागकोष संवर्धन", "Embryo culture / भ्रूण संवर्धन", "Protoplast culture / प्रोटोप्लास्ट संवर्धन", "Meristem culture / विभज्योतक संवर्धन"], 
+        answer: 3, 
         subject: "Biotechnology"
     },
     { 
         id: 215, 
         questionEn: "A term used for the first milk produced by a cow after calving?", 
         questionHi: "ब्याने के बाद गाय द्वारा उत्पादित पहले दूध के लिए किस शब्द का प्रयोग किया जाता है?", 
-        options: ["Milk / दूध", "Curd / दही", "Whey / मठा", "Colostrum / खीस (Colostrum)"], 
-        answer: 3, 
+        options: ["Colostrum / खीस (Colostrum)", "Milk / दूध", "Curd / दही", "Whey / मठा"], 
+        answer: 0, 
         subject: "Animal Husbandry"
     },
     { 
         id: 216, 
         questionEn: "A tool used for measuring wind speed is?", 
         questionHi: "हवा की गति मापने के लिए किस यंत्र का उपयोग किया जाता है?", 
-        options: ["Anemometer / एनीमोमीटर", "Barometer / बैरोमीटर", "Hygrometer / हाइग्रोमीटर", "Thermometer / थर्मामीटर"], 
-        answer: 0, 
+        options: ["Barometer / बैरोमीटर", "Hygrometer / हाइग्रोमीटर", "Anemometer / एनीमोमीटर", "Thermometer / थर्मामीटर"], 
+        answer: 2, 
         subject: "Meteorology"
     },
     { 
@@ -141,16 +140,16 @@
         id: 218, 
         questionEn: "A tool used to measure relative humidity is?", 
         questionHi: "सापेक्ष आर्द्रता (relative humidity) मापने के लिए किस यंत्र का उपयोग किया जाता है?", 
-        options: ["Barometer / बैरोमीटर", "Anemometer / एनीमोमीटर", "Hygrometer / हाइग्रोमीटर (Psychrometer)", "Rain gauge / वर्षा मापी"], 
-        answer: 2, 
+        options: ["Barometer / बैरोमीटर", "Anemometer / एनीमोमीटर", "Rain gauge / वर्षा मापी", "Hygrometer / हाइग्रोमीटर (Psychrometer)"], 
+        answer: 3, 
         subject: "Meteorology"
     },
     { 
         id: 219, 
         questionEn: "A type of germination where cotyledons come above the soil surface?", 
         questionHi: "अंकुरण का एक प्रकार जहाँ बीजपत्र (cotyledons) मिट्टी की सतह से ऊपर आते हैं?", 
-        options: ["Hypogeal / अधोभूमिक (Hypogeal)", "Vivipary / विविपेरी", "Ovipary / ओविपेरी", "Epigeal / उपरिभूमिक (Epigeal)"], 
-        answer: 3, 
+        options: ["Hypogeal / अधोभूमिक (Hypogeal)", "Vivipary / विविपेरी", "Epigeal / उपरिभूमिक (Epigeal)", "Ovipary / ओविपेरी"], 
+        answer: 2, 
         subject: "Botany"
     },
     { 
@@ -165,16 +164,16 @@
         id: 221, 
         questionEn: "Absence of seed formation is known as?", 
         questionHi: "बीज निर्माण की अनुपस्थिति को क्या कहा जाता है?", 
-        options: ["Apomixis / असंगजनन", "Parthenocarpy / अनिषेकफलन", "Polyembryony / बहुभ्रूणता", "Sterility / बंध्यता"], 
-        answer: 1, 
+        options: ["Parthenocarpy / अनिषेकफलन", "Polyembryony / बहुभ्रूणता", "Apomixis / असंगजनन", "Sterility / बंध्यता"], 
+        answer: 2, 
         subject: "Genetics & Plant Breeding"
     },
     { 
         id: 222, 
         questionEn: "Acid rain is caused by emission of?", 
         questionHi: "अम्लीय वर्षा (Acid rain) किसके उत्सर्जन के कारण होती है?", 
-        options: ["CO2 and CO / CO2 और CO", "CH4 and CFC / CH4 और CFC", "SO2 and NO2 / SO2 और NO2", "O3 and PAN / O3 और PAN"], 
-        answer: 2, 
+        options: ["CO2 and CO / CO2 और CO", "SO2 and NO2 / SO2 और NO2", "CH4 and CFC / CH4 और CFC", "O3 and PAN / O3 और PAN"], 
+        answer: 1, 
         subject: "Environmental Science"
     },
     { 
@@ -189,7 +188,7 @@
         id: 224, 
         questionEn: "Agricultural Census is conducted every?", 
         questionHi: "कृषि जनगणना (Agricultural Census) कितने वर्षों में आयोजित की जाती है?", 
-        options: ["5 Years / 5 वर्ष", "10 Years / 10 वर्ष", "2 Years / 2 वर्ष", "1 Year / 1 वर्ष"], 
+        options: ["10 Years / 10 वर्ष", "5 Years / 5 वर्ष", "2 Years / 2 वर्ष", "1 Year / 1 वर्ष"], 
         answer: 0, 
         subject: "Economics"
     },
@@ -197,16 +196,16 @@
         id: 225, 
         questionEn: "Livestock Census is conducted every?", 
         questionHi: "पशुधन जनगणना (Livestock Census) कितने वर्षों में आयोजित की जाती है?", 
-        options: ["10 Years / 10 वर्ष", "5 Years / 5 वर्ष", "7 Years / 7 वर्ष", "3 Years / 3 वर्ष"], 
-        answer: 1, 
+        options: ["10 Years / 10 वर्ष", "7 Years / 7 वर्ष", "5 Years / 5 वर्ष", "3 Years / 3 वर्ष"], 
+        answer: 2, 
         subject: "Animal Husbandry"
     },
     { 
         id: 226, 
         questionEn: "Agriculture is derived from which language words?", 
         questionHi: "Agriculture (कृषि) किस भाषा के शब्दों से बना है?", 
-        options: ["Greek / ग्रीक", "French / फ्रेंच", "Latin / लैटिन", "Arabic / अरबी"], 
-        answer: 2, 
+        options: ["Greek / ग्रीक", "Latin / लैटिन", "French / फ्रेंच", "Arabic / अरबी"], 
+        answer: 1, 
         subject: "General Agriculture"
     },
     { 
@@ -221,8 +220,8 @@
         id: 228, 
         questionEn: "Horticulture is derived from which language words?", 
         questionHi: "Horticulture (बागवानी) किस भाषा के शब्दों से बना है?", 
-        options: ["Latin / लैटिन", "Greek / ग्रीक", "English / अंग्रेजी", "Spanish / स्पेनिश"], 
-        answer: 0, 
+        options: ["Greek / ग्रीक", "Latin / लैटिन", "English / अंग्रेजी", "Spanish / स्पेनिश"], 
+        answer: 1, 
         subject: "Horticulture"
     },
     { 
@@ -237,16 +236,16 @@
         id: 230, 
         questionEn: "Agmark act was passed in the year?", 
         questionHi: "एगमार्क (Agmark) अधिनियम किस वर्ष पारित किया गया था?", 
-        options: ["1955", "1965", "1937", "1986"], 
-        answer: 2, 
+        options: ["1955", "1937", "1965", "1986"], 
+        answer: 1, 
         subject: "Economics"
     },
     { 
         id: 231, 
         questionEn: "AICRP on Maize was started in which year?", 
         questionHi: "मक्का पर AICRP किस वर्ष शुरू किया गया था?", 
-        options: ["1960", "1965", "1970", "1957"], 
-        answer: 3, 
+        options: ["1960", "1957", "1970", "1965"], 
+        answer: 1, 
         subject: "Agronomy"
     },
     { 
@@ -269,7 +268,7 @@
         id: 234, 
         questionEn: "Amrapali is a cross between?", 
         questionHi: "आम्रपाली (Amrapali) किसके बीच का संकर है?", 
-        options: ["Neelum x Dashehari / नीलम x दशहरी", "Ratna x Alphonso / रत्ना x अल्लफांसो", "Dashehari x Neelum / दशहरी x नीलम", "Neelum x Alphonso / नीलम x अल्लफांसो"], 
+        options: ["Neelum x Dashehari / नीलम x दशहरी", "Dashehari x Neelum / दशहरी x नीलम", "Ratna x Alphonso / रत्ना x अल्लफांसो", "Neelum x Alphonso / नीलम x अल्लफांसो"], 
         answer: 2, 
         subject: "Horticulture"
     },
@@ -285,32 +284,32 @@
         id: 236, 
         questionEn: "Ratna is a cross between?", 
         questionHi: "रत्ना (Ratna) किसके बीच का संकर है?", 
-        options: ["Alphonso x Neelum / अल्लफांसो x नीलम", "Neelum x Alphonso / नीलम x अल्लफांसो", "Dashehari x Neelum / दशहरी x नीलम", "Neelum x Dashehari / नीलम x दशहरी"], 
-        answer: 1, 
+        options: ["Neelum x Alphonso / नीलम x अल्लफांसो", "Dashehari x Neelum / दशहरी x नीलम", "Neelum x Dashehari / नीलम x दशहरी", "Alphonso x Neelum / अल्लफांसो x नीलम"], 
+        answer: 2, 
         subject: "Horticulture"
     },
     { 
         id: 237, 
         questionEn: "Sindhu is a cross between?", 
         questionHi: "सिंधु (Sindhu) किसके बीच का संकर है?", 
-        options: ["Neelum x Alphonso / नीलम x अल्लफांसो", "Dashehari x Neelum / दशहरी x नीलम", "Ratna x Alphonso / रत्ना x अल्लफांसो", "Alphonso x Ratna / अल्लफांसो x रत्ना"], 
-        answer: 2, 
+        options: ["Ratna x Alphonso / रत्ना x अल्लफांसो", "Neelum x Alphonso / नीलम x अल्लफांसो", "Dashehari x Neelum / दशहरी x नीलम", "Alphonso x Ratna / अल्लफांसो x रत्ना"], 
+        answer: 0, 
         subject: "Horticulture"
     },
     { 
         id: 238, 
         questionEn: "An instrument used to measure depth of water table is?", 
         questionHi: "जल स्तर (water table) की गहराई मापने के लिए किस यंत्र का उपयोग किया जाता है?", 
-        options: ["Lysimeter / लाइसीमीटर", "Tensiometer / टेन्सियोमीटर", "Pyranometer / पाइरानोमीटर", "Piezometer / पीज़ोमीटर"], 
-        answer: 3, 
+        options: ["Lysimeter / लाइसीमीटर", "Tensiometer / टेन्सियोमीटर", "Piezometer / पीज़ोमीटर", "Pyranometer / पाइरानोमीटर"], 
+        answer: 2, 
         subject: "Agricultural Engineering"
     },
     { 
         id: 239, 
         questionEn: "An instrument used to measure evapotranspiration is?", 
         questionHi: "वाष्पोत्सर्जन (evapotranspiration) मापने के लिए किस यंत्र का उपयोग किया जाता है?", 
-        options: ["Lysimeter / लाइसीमीटर", "Piezometer / पीज़ोमीटर", "Lactometer / लैक्टोमीटर", "Manometer / मैनोमीटर"], 
-        answer: 0, 
+        options: ["Piezometer / पीज़ोमीटर", "Lysimeter / लाइसीमीटर", "Lactometer / लैक्टोमीटर", "Manometer / मैनोमीटर"], 
+        answer: 1, 
         subject: "Meteorology"
     },
     { 
@@ -325,32 +324,32 @@
         id: 241, 
         questionEn: "An instrument used to measure direct solar radiation is?", 
         questionHi: "प्रत्यक्ष सौर विकिरण (direct solar radiation) मापने के लिए किस यंत्र का उपयोग किया जाता है?", 
-        options: ["Pyranometer / पाइरानोमीटर", "Sunshine recorder / सनशाइन रिकॉर्डर", "Pyrheliometer / पाइरिलियोमीटर", "Radiometer / रेडियोमीटर"], 
-        answer: 2, 
+        options: ["Pyranometer / पाइरानोमीटर", "Sunshine recorder / सनशाइन रिकॉर्डर", "Radiometer / रेडियोमीटर", "Pyrheliometer / पाइरिलियोमीटर"], 
+        answer: 3, 
         subject: "Meteorology"
     },
     { 
         id: 242, 
         questionEn: "Analysis of variance (ANOVA) was developed by?", 
         questionHi: "विचरण का विश्लेषण (ANOVA) किसके द्वारा विकसित किया गया था?", 
-        options: ["Pearson / पियर्सन", "Galton / गैल्टन", "Spearman / स्पीयरमैन", "R.A. Fisher / आर.ए. फिशर"], 
-        answer: 3, 
+        options: ["Pearson / पियर्सन", "Galton / गैल्टन", "R.A. Fisher / आर.ए. फिशर", "Spearman / स्पीयरमैन"], 
+        answer: 2, 
         subject: "Statistics"
     },
     { 
         id: 243, 
         questionEn: "Angular leaf spot of cotton is caused by?", 
         questionHi: "कपास का कोणीय पत्ती धब्बा (Angular leaf spot) किसके कारण होता है?", 
-        options: ["Bacteria / जीवाणु (Xanthomonas)", "Fungi / कवक", "Virus / विषाणु", "Nematode / सूत्रकृमि"], 
-        answer: 0, 
+        options: ["Fungi / कवक", "Bacteria / जीवाणु (Xanthomonas)", "Virus / विषाणु", "Nematode / सूत्रकृमि"], 
+        answer: 1, 
         subject: "Plant Pathology"
     },
     { 
         id: 244, 
         questionEn: "Anthrax disease in cattle is caused by?", 
         questionHi: "मवेशियों में एंथ्रेक्स (Anthrax) रोग किसके कारण होता है?", 
-        options: ["Virus / विषाणु", "Bacteria / जीवाणु (Bacillus anthracis)", "Fungi / कवक", "Protozoa / प्रोटोजोआ"], 
-        answer: 1, 
+        options: ["Virus / विषाणु", "Fungi / कवक", "Bacteria / जीवाणु (Bacillus anthracis)", "Protozoa / प्रोटोजोआ"], 
+        answer: 2, 
         subject: "Animal Husbandry"
     },
     { 
@@ -365,16 +364,16 @@
         id: 246, 
         questionEn: "Apis mellifera is the scientific name of?", 
         questionHi: " एपिस मेलिफेरा (Apis mellifera) किसका वैज्ञानिक नाम है?", 
-        options: ["Indian Bee / भारतीय मधुमक्खी", "Rock Bee / रॉक बी", "Little Bee / छोटी मधुमक्खी", "European Bee / यूरोपीय मधुमक्खी"], 
-        answer: 3, 
+        options: ["Indian Bee / भारतीय मधुमक्खी", "European Bee / यूरोपीय मधुमक्खी", "Rock Bee / रॉक बी", "Little Bee / छोटी मधुमक्खी"], 
+        answer: 1, 
         subject: "Entomology"
     },
     { 
         id: 247, 
         questionEn: "Apple bowl of India is?", 
         questionHi: "भारत का सेब का कटोरा (Apple bowl) किसे कहा जाता है?", 
-        options: ["Himachal Pradesh / हिमाचल प्रदेश", "Jammu & Kashmir / जम्मू और कश्मीर", "Uttarakhand / उत्तराखंड", "Arunachal Pradesh / अरुणाचल प्रदेश"], 
-        answer: 0, 
+        options: ["Jammu & Kashmir / जम्मू और कश्मीर", "Uttarakhand / उत्तराखंड", "Arunachal Pradesh / अरुणाचल प्रदेश", "Himachal Pradesh / हिमाचल प्रदेश"], 
+        answer: 3, 
         subject: "Horticulture"
     },
     { 
@@ -397,16 +396,16 @@
         id: 250, 
         questionEn: "Arhar (Pigeon pea) is also known as?", 
         questionHi: "अरहर (Pigeon pea) को और किस नाम से जाना जाता है?", 
-        options: ["Bengal gram / बंगाल चना", "Green gram / मूंग", "Black gram / उड़द", "Red gram / लाल चना (Red gram)"], 
-        answer: 3, 
+        options: ["Bengal gram / बंगाल चना", "Green gram / मूंग", "Red gram / लाल चना (Red gram)", "Black gram / उड़द"], 
+        answer: 2, 
         subject: "Agronomy"
     },
     { 
         id: 251, 
         questionEn: "Artificial application of water to the soil is called?", 
         questionHi: "मिट्टी में पानी का कृत्रिम अनुप्रयोग क्या कहलाता है?", 
-        options: ["Irrigation / सिंचाई", "Drainage / जल निकासी", "Rainfall / वर्षा", "Water harvesting / जल संचयन"], 
-        answer: 0, 
+        options: ["Drainage / जल निकासी", "Irrigation / सिंचाई", "Rainfall / वर्षा", "Water harvesting / जल संचयन"], 
+        answer: 1, 
         subject: "Agronomy"
     },
     { 
@@ -429,56 +428,56 @@
         id: 254, 
         questionEn: "Atmospheric pressure at sea level is?", 
         questionHi: "समुद्र तल पर वायुमंडलीय दाब कितना होता है?", 
-        options: ["1000 mb / 1000 मिलीबार", "950 mb / 950 मिलीबार", "1050 mb / 1050 मिलीबार", "1013.25 mb / 1013.25 मिलीबार"], 
-        answer: 3, 
+        options: ["1000 mb / 1000 मिलीबार", "950 mb / 950 मिलीबार", "1013.25 mb / 1013.25 मिलीबार", "1050 mb / 1050 मिलीबार"], 
+        answer: 2, 
         subject: "Meteorology"
     },
     { 
         id: 255, 
         questionEn: "Average gestation period of Buffalo is?", 
         questionHi: "भैंस की औसत गर्भकाल अवधि (gestation period) कितनी होती है?", 
-        options: ["310 days / 310 दिन", "280 days / 280 दिन", "150 days / 150 दिन", "114 days / 114 दिन"], 
-        answer: 0, 
+        options: ["280 days / 280 दिन", "150 days / 150 दिन", "310 days / 310 दिन", "114 days / 114 दिन"], 
+        answer: 2, 
         subject: "Animal Husbandry"
     },
     { 
         id: 256, 
         questionEn: "Average gestation period of Cow is?", 
         questionHi: "गाय की औसत गर्भकाल अवधि कितनी होती है?", 
-        options: ["310 days / 310 दिन", "280-285 days / 280-285 दिन", "150 days / 150 दिन", "114 days / 114 दिन"], 
-        answer: 1, 
+        options: ["310 days / 310 दिन", "150 days / 150 दिन", "114 days / 114 दिन", "280-285 days / 280-285 दिन"], 
+        answer: 3, 
         subject: "Animal Husbandry"
     },
     { 
         id: 257, 
         questionEn: "Azolla is used as a biofertilizer in which crop?", 
         questionHi: "अज़ोला (Azolla) का उपयोग किस फसल में जैव उर्वरक के रूप में किया जाता है?", 
-        options: ["Wheat / गेहूं", "Maize / मक्का", "Rice / चावल", "Sugarcane / गन्ना"], 
-        answer: 2, 
+        options: ["Rice / चावल", "Wheat / गेहूं", "Maize / मक्का", "Sugarcane / गन्ना"], 
+        answer: 0, 
         subject: "Agronomy"
     },
     { 
         id: 258, 
         questionEn: "Bajra is also known as?", 
         questionHi: "बाजरा (Bajra) को और किस नाम से जाना जाता है?", 
-        options: ["Finger millet / रागी", "Sorghum / ज्वार", "Maize / मक्का", "Pearl millet / पर्ल मिलेट"], 
-        answer: 3, 
+        options: ["Finger millet / रागी", "Pearl millet / पर्ल मिलेट", "Sorghum / ज्वार", "Maize / मक्का"], 
+        answer: 1, 
         subject: "Agronomy"
     },
     { 
         id: 259, 
         questionEn: "Bakanae disease of rice is caused by?", 
         questionHi: "चावल का बकाने (Bakanae) रोग किसके कारण होता है?", 
-        options: ["Fungi / कवक (Gibberella fujikuroi)", "Bacteria / जीवाणु", "Virus / विषाणु", "Nematode / सूत्रकृमि"], 
-        answer: 0, 
+        options: ["Bacteria / जीवाणु", "Fungi / कवक (Gibberella fujikuroi)", "Virus / विषाणु", "Nematode / सूत्रकृमि"], 
+        answer: 1, 
         subject: "Plant Pathology"
     },
     { 
         id: 260, 
         questionEn: "Banana propagation is mainly done by?", 
         questionHi: "केले का प्रवर्धन (propagation) मुख्य रूप से किसके द्वारा किया जाता है?", 
-        options: ["Seeds / बीज", "Sword suckers / स्वॉर्ड सकर्स", "Stem cuttings / तने की कटिंग", "Grafting / ग्राफ्टिंग"], 
-        answer: 1, 
+        options: ["Sword suckers / स्वॉर्ड सकर्स", "Seeds / बीज", "Stem cuttings / तने की कटिंग", "Grafting / ग्राफ्टिंग"], 
+        answer: 0, 
         subject: "Horticulture"
     },
     { 
@@ -493,8 +492,8 @@
         id: 262, 
         questionEn: "Barley is generally used for preparation of?", 
         questionHi: "जौ (Barley) का उपयोग आमतौर पर क्या बनाने के लिए किया जाता है?", 
-        options: ["Bread / ब्रेड", "Oil / तेल", "Fiber / रेशा", "Malt / माल्ट"], 
-        answer: 3, 
+        options: ["Bread / ब्रेड", "Malt / माल्ट", "Oil / तेल", "Fiber / रेशा"], 
+        answer: 1, 
         subject: "Food Science"
     },
     { 
@@ -517,8 +516,8 @@
         id: 265, 
         questionEn: "Bengal famine (1943) was caused by?", 
         questionHi: "बंगाल का अकाल (1943) किसके कारण हुआ था?", 
-        options: ["Blast of rice / चावल का ब्लास्ट रोग", "Bacterial blight / बैक्टीरियल ब्लाइट", "Brown spot of rice / चावल का भूरा धब्बा रोग", "Tungro virus / टुंग्रो वायरस"], 
-        answer: 2, 
+        options: ["Blast of rice / चावल का ब्लास्ट रोग", "Brown spot of rice / चावल का भूरा धब्बा रोग", "Bacterial blight / बैक्टीरियल ब्लाइट", "Tungro virus / टुंग्रो वायरस"], 
+        answer: 1, 
         subject: "Plant Pathology"
     },
     { 
@@ -541,24 +540,24 @@
         id: 268, 
         questionEn: "Best method of irrigation for water scarcity area is?", 
         questionHi: "जल की कमी वाले क्षेत्र के लिए सिंचाई की सर्वोत्तम विधि कौन सी है?", 
-        options: ["Sprinkler / स्प्रिंकलर", "Drip / ड्रिप", "Flooding / बाढ़ विधि", "Furrow / कूंड"], 
-        answer: 1, 
+        options: ["Flooding / बाढ़ विधि", "Sprinkler / स्प्रिंकलर", "Drip / ड्रिप", "Furrow / कूंड"], 
+        answer: 2, 
         subject: "Agronomy"
     },
     { 
         id: 269, 
         questionEn: "Bhoodan movement was started by?", 
         questionHi: "भूदान आंदोलन (Bhoodan movement) किसके द्वारा शुरू किया गया था?", 
-        options: ["Mahatma Gandhi / महात्मा गांधी", "Jawaharlal Nehru / जवाहरलाल नेहरू", "Vinoba Bhave / विनोबा भावे", "Sardar Patel / सरदार पटेल"], 
-        answer: 2, 
+        options: ["Mahatma Gandhi / महात्मा गांधी", "Jawaharlal Nehru / जवाहरलाल नेहरू", "Sardar Patel / सरदार पटेल", "Vinoba Bhave / विनोबा भावे"], 
+        answer: 3, 
         subject: "Extension Education"
     },
     { 
         id: 270, 
         questionEn: "Biofertilizer used in Wheat crop is?", 
         questionHi: "गेहूं की फसल में प्रयुक्त जैव उर्वरक कौन सा है?", 
-        options: ["Rhizobium / राइजोबियम", "Azospirillum / एज़ोस्पिरिलम", "BGA / बीजीए", "Azotobacter / एज़ोटोबैक्टर"], 
-        answer: 3, 
+        options: ["Azotobacter / एज़ोटोबैक्टर", "Rhizobium / राइजोबियम", "Azospirillum / एज़ोस्पिरिलम", "BGA / बीजीए"], 
+        answer: 0, 
         subject: "Soil Science"
     },
     { 
