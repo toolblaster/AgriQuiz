@@ -492,8 +492,8 @@
         id: 362, 
         questionEn: "Father of Agronomy is?", 
         questionHi: "सस्य विज्ञान के जनक (Father of Agronomy) कौन हैं?", 
-        options: ["Jethro Tull / जेथ्रो टुल", "Pietro de' Crescenzi / पिएत्रो डी' क्रेसेंज़ी", "Liebig / लिबिग", "MS Swaminathan / एमएस स्वामीनाथन"], 
-        answer: 1, 
+        options: ["Jethro Tull / जेथ्रो टुल", "Liebig / लिबिग", "Pietro de' Crescenzi / पिएत्रो डी' क्रेसेंज़ी", "MS Swaminathan / एमएस स्वामीनाथन"], 
+        answer: 2, 
         subject: "Agronomy"
     },
     { 
@@ -668,8 +668,8 @@
         id: 384, 
         questionEn: "Fruit type of Citrus is?", 
         questionHi: "सिट्रस (खट्टे फल) का फल प्रकार क्या है?", 
-        options: ["Berry / बेरी", "Drupe / ड्रूप", "Pome / पोम", "Hesperidium / हेस्पेरिडियम"], 
-        answer: 3, 
+        options: ["Hesperidium / हेस्पेरिडियम", "Berry / बेरी", "Drupe / ड्रूप", "Pome / पोम"], 
+        answer: 0, 
         subject: "Horticulture"
     },
     { 
@@ -780,8 +780,8 @@
         id: 398, 
         questionEn: "Which Indian states having maximum usage of herbicides?", 
         questionHi: "किन भारतीय राज्यों में शाकनाशी (herbicides) का सर्वाधिक उपयोग होता है?", 
-        options: ["UP and Bihar / यूपी और बिहार", "Punjab And Haryana / पंजाब और हरियाणा", "TN and Kerala / टीएन और केरल", "MP and Rajasthan / एमपी और राजस्थान"], 
-        answer: 1, 
+        options: ["UP and Bihar / यूपी और बिहार", "TN and Kerala / टीएन और केरल", "Punjab And Haryana / पंजाब और हरियाणा", "MP and Rajasthan / एमपी और राजस्थान"], 
+        answer: 2, 
         subject: "Agronomy"
     },
     { 
@@ -812,32 +812,32 @@
         id: 402, 
         questionEn: "What are the planting materials for Banana?", 
         questionHi: "केले के लिए रोपण सामग्री (planting materials) क्या हैं?", 
-        options: ["Seeds / बीज", "Sword suckers / स्वॉर्ड सकर्स", "Tubers / कंद", "Cuttings / कलम"], 
-        answer: 1, 
+        options: ["Seeds / बीज", "Tubers / कंद", "Sword suckers / स्वॉर्ड सकर्स", "Cuttings / कलम"], 
+        answer: 2, 
         subject: "Horticulture"
     },
     { 
         id: 403, 
         questionEn: "What are the planting materials of Pineapple?", 
         questionHi: "अनानास की रोपण सामग्री क्या हैं?", 
-        options: ["Seeds / बीज", "Grafts / ग्राफ्ट", "Suckers, Slips, Crown / सकर्स, स्लिप्स, क्राउन", "Buds / कलियाँ"], 
-        answer: 2, 
+        options: ["Seeds / बीज", "Grafts / ग्राफ्ट", "Buds / कलियाँ", "Suckers, Slips, Crown / सकर्स, स्लिप्स, क्राउन"], 
+        answer: 3, 
         subject: "Horticulture"
     },
     { 
         id: 404, 
         questionEn: "Arid regions normally receive a rainfall of?", 
         questionHi: "शुष्क क्षेत्रों (Arid regions) में सामान्यतः कितनी वर्षा होती है?", 
-        options: ["More than 1000 mm / 1000 मिमी से अधिक", "Less than 500 mm / 500 मिमी से कम", "750-1000 mm / 750-1000 मिमी", "500-750 mm / 500-750 मिमी"], 
-        answer: 1, 
+        options: ["Less than 500 mm / 500 मिमी से कम", "More than 1000 mm / 1000 मिमी से अधिक", "750-1000 mm / 750-1000 मिमी", "500-750 mm / 500-750 मिमी"], 
+        answer: 0, 
         subject: "Meteorology"
     },
     { 
         id: 405, 
         questionEn: "ARIS (Agricultural Research Information System) was established by?", 
         questionHi: "ARIS (कृषि अनुसंधान सूचना प्रणाली) किसके द्वारा स्थापित की गई थी?", 
-        options: ["IARI, 1990 / आईएआरआई, 1990", "CSIR, 1998 / सीएसआईआर, 1998", "ICAR, 1995 / आईसीएआर, 1995", "NABARD, 2000 / नाबार्ड, 2000"], 
-        answer: 2, 
+        options: ["IARI, 1990 / आईएआरआई, 1990", "ICAR, 1995 / आईसीएआर, 1995", "CSIR, 1998 / सीएसआईआर, 1998", "NABARD, 2000 / नाबार्ड, 2000"], 
+        answer: 1, 
         subject: "General Agriculture"
     },
     { 
