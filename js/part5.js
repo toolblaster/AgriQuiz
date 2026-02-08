@@ -277,8 +277,8 @@
         id: 442, 
         questionEn: "Pomology is the branch of agriculture dealing with?", 
         questionHi: "पोमोलॉजी (Pomology) कृषि की वह शाखा है जो किससे संबंधित है?", 
-        options: ["Vegetables / सब्जियां", "Fruits / फल", "Flowers / फूल", "Forests / वन"], 
-        answer: 1,
+        options: ["Vegetables / सब्जियां", "Flowers / फूल", "Forests / वन", "Fruits / फल"], 
+        answer: 3,
         subject: "Horticulture"
     },
     { 
@@ -293,8 +293,8 @@
         id: 444, 
         questionEn: "World Environment Day is celebrated on?", 
         questionHi: "विश्व पर्यावरण दिवस (World Environment Day) कब मनाया जाता है?", 
-        options: ["22nd April / 22 अप्रैल", "16th October / 16 अक्टूबर", "23rd December / 23 दिसंबर", "5th June / 5 जून"], 
-        answer: 3,
+        options: ["22nd April / 22 अप्रैल", "5th June / 5 जून", "16th October / 16 अक्टूबर", "23rd December / 23 दिसंबर"], 
+        answer: 1,
         subject: "General Agriculture"
     },
     { 
@@ -341,8 +341,8 @@
         id: 450, 
         questionEn: "Which crop has the largest cultivated area in India?", 
         questionHi: "भारत में सबसे बड़े खेती वाले क्षेत्र में कौन सी फसल उगाई जाती है?", 
-        options: ["Wheat / गेहूं", "Cotton / कपास", "Rice / चावल", "Maize / मक्का"], 
-        answer: 2,
+        options: ["Wheat / गेहूं", "Cotton / कपास", "Maize / मक्का", "Rice / चावल"], 
+        answer: 3,
         subject: "Agronomy"
     },
     { 
@@ -357,8 +357,8 @@
         id: 452, 
         questionEn: "Which state is known as the 'Sugar Bowl of India'?", 
         questionHi: "किस राज्य को 'भारत का चीनी का कटोरा' (Sugar Bowl of India) कहा जाता है?", 
-        options: ["Maharashtra / महाराष्ट्र", "Punjab / पंजाब", "Uttar Pradesh / उत्तर प्रदेश", "Haryana / हरियाणा"], 
-        answer: 2,
+        options: ["Maharashtra / महाराष्ट्र", "Uttar Pradesh / उत्तर प्रदेश", "Punjab / पंजाब", "Haryana / हरियाणा"], 
+        answer: 1,
         subject: "General Agriculture"
     },
     { 
@@ -389,8 +389,8 @@
         id: 456, 
         questionEn: "The act of mating in Sheep is called?", 
         questionHi: "भेड़ में संभोग (mating) की क्रिया को क्या कहा जाता है?", 
-        options: ["Serving / सर्विंग", "Coupling / कपलिंग", "Tupping / टपिंग", "Covering / कवरिंग"], 
-        answer: 2,
+        options: ["Serving / सर्विंग", "Tupping / टपिंग", "Coupling / कपलिंग", "Covering / कवरिंग"], 
+        answer: 1,
         subject: "Animal Husbandry"
     },
     { 
@@ -405,8 +405,8 @@
         id: 458, 
         questionEn: "Meat of Goat is known as?", 
         questionHi: "बकरी के मांस को किस नाम से जाना जाता है?", 
-        options: ["Mutton / मटन", "Chevon / चेवन", "Pork / पोर्क", "Beef / बीफ"], 
-        answer: 1,
+        options: ["Mutton / मटन", "Pork / पोर्क", "Beef / बीफ", "Chevon / चेवन"], 
+        answer: 3,
         subject: "Animal Husbandry"
     },
     { 
@@ -429,8 +429,8 @@
         id: 461, 
         questionEn: "Male inflorescence of Maize is known as?", 
         questionHi: "मक्का के नर पुष्पक्रम (Male inflorescence) को किस नाम से जाना जाता है?", 
-        options: ["Silk / सिल्क", "Tassel / टैसल", "Ear / ईयर", "Cob / कोब"], 
-        answer: 1,
+        options: ["Silk / सिल्क", "Ear / ईयर", "Tassel / टैसल", "Cob / कोब"], 
+        answer: 2,
         subject: "Botany"
     },
     { 
@@ -461,16 +461,16 @@
         id: 465, 
         questionEn: "Which element is essential for Nitrogen Fixation?", 
         questionHi: "नाइट्रोजन स्थिरीकरण (Nitrogen Fixation) के लिए कौन सा तत्व आवश्यक है?", 
-        options: ["Boron / बोरॉन", "Molybdenum / मोलिब्डेनम", "Zinc / जस्ता", "Copper / तांबा"], 
-        answer: 1,
+        options: ["Boron / बोरॉन", "Zinc / जस्ता", "Molybdenum / मोलिब्डेनम", "Copper / तांबा"], 
+        answer: 2,
         subject: "Plant Physiology"
     },
     { 
         id: 466, 
         questionEn: "Which element imparts disease resistance in plants?", 
         questionHi: "कौन सा तत्व पौधों में रोग प्रतिरोधक क्षमता (disease resistance) प्रदान करता है?", 
-        options: ["Nitrogen / नाइट्रोजन", "Phosphorus / फास्फोरस", "Potassium / पोटेशियम", "Calcium / कैल्शियम"], 
-        answer: 2,
+        options: ["Nitrogen / नाइट्रोजन", "Phosphorus / फास्फोरस", "Calcium / कैल्शियम", "Potassium / पोटेशियम"], 
+        answer: 3,
         subject: "Plant Physiology"
     },
     { 
@@ -501,8 +501,8 @@
         id: 470, 
         questionEn: "Fruit cracking is generally caused by deficiency of?", 
         questionHi: "फलों का फटना (Fruit cracking) आमतौर पर किसकी कमी से होता है?", 
-        options: ["Calcium / कैल्शियम", "Boron / बोरॉन", "Zinc / जस्ता", "Potassium / पोटेशियम"], 
-        answer: 1,
+        options: ["Calcium / कैल्शियम", "Zinc / जस्ता", "Potassium / पोटेशियम", "Boron / बोरॉन"], 
+        answer: 3,
         subject: "Horticulture"
     },
     { 
@@ -581,8 +581,8 @@
         id: 480, 
         questionEn: "What is the main benefit of Neem Coated Urea?", 
         questionHi: "नीम लेपित यूरिया (Neem Coated Urea) का मुख्य लाभ क्या है?", 
-        options: ["Increases Nitrogen content / नाइट्रोजन सामग्री बढ़ाता है", "Kills pests / कीटों को मारता है", "Decreases cost / लागत कम करता है", "Slow release of Nitrogen / नाइट्रोजन की धीमी रिहाई"], 
-        answer: 3,
+        options: ["Increases Nitrogen content / नाइट्रोजन सामग्री बढ़ाता है", "Slow release of Nitrogen / नाइट्रोजन की धीमी रिहाई", "Kills pests / कीटों को मारता है", "Decreases cost / लागत कम करता है"], 
+        answer: 1,
         subject: "Soil Science"
     },
     { 
